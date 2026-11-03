@@ -445,9 +445,21 @@ export default function DashboardPage() {
                 return (
                   <div key={b.id} className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-medium">
-                      <span className="font-semibold text-foreground">
-                        {b.category?.name}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-semibold text-foreground">
+                          {b.category?.name}
+                        </span>
+                        {isOver && (
+                          <span className="text-[9px] px-1.5 py-0.5 rounded font-bold bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-400">
+                            Melebihi
+                          </span>
+                        )}
+                        {isWarning && (
+                          <span className="text-[9px] px-1.5 py-0.5 rounded font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">
+                            Waspada
+                          </span>
+                        )}
+                      </div>
                       <span className="text-muted-foreground">
                         {formatIDR(b.spent || 0)} / {formatIDR(b.amount)}
                         <span

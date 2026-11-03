@@ -12,7 +12,6 @@ export async function fetchCashFlowReport(
     params: { year: year !== undefined ? year : undefined },
   });
 }
-
 export async function fetchExpenseReport(
   month?: number,
   year?: number

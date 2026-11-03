@@ -105,6 +105,33 @@ export default function ReportsPage() {
     "Juli", "Agustus", "September", "Oktober", "November", "Desember",
   ];
 
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExportCsv = async () => {
+    try {
+      setIsExporting(true);
+      const url = `/api/transactions/export?startDate=${selectedYear}-01-01&endDate=${selectedYear}-12-31`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Gagal mengunduh file laporan.");
+      }
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = `moneytrack-laporan-${selectedYear}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+      toast.success(`Laporan tahun ${selectedYear} berhasil diunduh sebagai CSV.`);
+    } catch {
+      toast.error("Gagal mengekspor laporan transaksi.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const handleRetry = () => {
     setLoading(true);
     setRefreshTrigger((prev) => prev + 1);
@@ -150,11 +177,12 @@ export default function ReportsPage() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-2"
-            onClick={() => toast.info("Fitur ekspor PDF & CSV akan aktif di Phase 8")}
+            className="gap-2 cursor-pointer"
+            onClick={handleExportCsv}
+            disabled={isExporting}
           >
             <Download className="h-4 w-4" />
-            Ekspor Laporan
+            {isExporting ? "Mengekspor..." : "Ekspor CSV"}
           </Button>
         </div>
       </PageHeader>

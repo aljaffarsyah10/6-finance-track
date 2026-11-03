@@ -9,6 +9,10 @@ import {
 import { transactionSchema } from "../src/lib/validations/transaction.schema";
 import { accountSchema } from "../src/lib/validations/account.schema";
 import { budgetSchema } from "../src/lib/validations/budget.schema";
+import {
+  updateProfileSchema,
+  changePasswordSchema,
+} from "../src/lib/validations/user.schema";
 
 describe("Financial Calculation Engine & Unit Tests", () => {
   describe("1. Balance Calculation", () => {
@@ -166,6 +170,75 @@ describe("Financial Calculation Engine & Unit Tests", () => {
         year: 2026,
       };
       assert.equal(budgetSchema.safeParse(invalidBudget).success, false);
+    });
+  });
+
+  describe("6. CSV Security & Sanitization", () => {
+    function sanitizeCsvCell(value: unknown): string {
+      if (value === null || value === undefined) {
+        return '""';
+      }
+      let str = String(value).trim();
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = `'${str}`;
+      }
+      str = str.replace(/"/g, '""');
+      return `"${str}"`;
+    }
+
+    it("should neutralize formula injection characters (=, +, -, @, \\t, \\r)", () => {
+      assert.equal(sanitizeCsvCell("=SUM(A1:A10)"), '"\'=SUM(A1:A10)"');
+      assert.equal(sanitizeCsvCell("+cmd|' /C calc'!A0"), '"\'+cmd|\' /C calc\'!A0"');
+      assert.equal(sanitizeCsvCell("-1234"), '"\'-1234"');
+      assert.equal(sanitizeCsvCell("@alert(1)"), '"\'@alert(1)"');
+    });
+
+    it("should properly escape double quotes", () => {
+      assert.equal(sanitizeCsvCell('Beli "Kopi" Enak'), '"Beli ""Kopi"" Enak"');
+    });
+
+    it("should handle null or undefined safely", () => {
+      assert.equal(sanitizeCsvCell(null), '""');
+      assert.equal(sanitizeCsvCell(undefined), '""');
+    });
+  });
+
+  describe("7. User Profile & Password Change Schema Validation", () => {
+    it("should validate profile update name length", () => {
+      assert.equal(updateProfileSchema.safeParse({ name: "A" }).success, false);
+      assert.equal(updateProfileSchema.safeParse({ name: "Budi Santoso" }).success, true);
+    });
+
+    it("should validate password change minimum length and confirmation match", () => {
+      // Too short
+      assert.equal(
+        changePasswordSchema.safeParse({
+          currentPassword: "oldpassword123",
+          newPassword: "short",
+          confirmNewPassword: "short",
+        }).success,
+        false
+      );
+
+      // Mismatched
+      assert.equal(
+        changePasswordSchema.safeParse({
+          currentPassword: "oldpassword123",
+          newPassword: "newpassword123",
+          confirmNewPassword: "differentpassword123",
+        }).success,
+        false
+      );
+
+      // Valid
+      assert.equal(
+        changePasswordSchema.safeParse({
+          currentPassword: "oldpassword123",
+          newPassword: "newpassword123",
+          confirmNewPassword: "newpassword123",
+        }).success,
+        true
+      );
     });
   });
 });

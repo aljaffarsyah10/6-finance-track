@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wallet, TrendingUp, ShieldCheck, PieChart, ArrowRight } from "lucide-react";
+import { ThemeToggle } from "@/components/common/theme-toggle";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
             <span className="font-semibold text-lg tracking-tight">MoneyTrack</span>
           </div>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Link href="/login">
               <Button variant="outline" size="sm">
                 Masuk

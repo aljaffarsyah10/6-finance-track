@@ -27,6 +27,11 @@ import {
   ArrowDownRight,
   ChevronLeft,
   ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Download,
+  RotateCcw,
+  SlidersHorizontal,
 } from "lucide-react";
 import { transactionsApi, accountsApi, categoriesApi } from "@/lib/api";
 import { getErrorMessage } from "@/lib/api/errors";
@@ -49,12 +54,17 @@ export default function TransactionsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("ALL");
   const [accountFilter, setAccountFilter] = useState<string>("ALL");
+  const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [isExporting, setIsExporting] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const pageSize = 10;
 
   // Dialog states
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -97,6 +107,9 @@ export default function TransactionsPage() {
           search: searchQuery || undefined,
           type: typeFilter !== "ALL" ? (typeFilter as TransactionType) : undefined,
           accountId: accountFilter !== "ALL" ? accountFilter : undefined,
+          categoryId: categoryFilter !== "ALL" ? categoryFilter : undefined,
+          startDate: startDate || undefined,
+          endDate: endDate || undefined,
         });
 
         if (!ignore) {
@@ -123,7 +136,17 @@ export default function TransactionsPage() {
     return () => {
       ignore = true;
     };
-  }, [currentPage, searchQuery, typeFilter, accountFilter, refreshTrigger]);
+  }, [
+    currentPage,
+    pageSize,
+    searchQuery,
+    typeFilter,
+    accountFilter,
+    categoryFilter,
+    startDate,
+    endDate,
+    refreshTrigger,
+  ]);
 
   const handleSaveTransaction = async (data: TransactionFormValues, id?: string) => {
     try {
@@ -161,32 +184,103 @@ export default function TransactionsPage() {
     }
   };
 
+  const handleResetFilters = () => {
+    setLoading(true);
+    setSearchQuery("");
+    setTypeFilter("ALL");
+    setAccountFilter("ALL");
+    setCategoryFilter("ALL");
+    setStartDate("");
+    setEndDate("");
+    setCurrentPage(1);
+  };
+
+  const handleExportCsv = async () => {
+    try {
+      setIsExporting(true);
+      const params = new URLSearchParams();
+      if (searchQuery) params.append("search", searchQuery);
+      if (typeFilter !== "ALL") params.append("type", typeFilter);
+      if (accountFilter !== "ALL") params.append("accountId", accountFilter);
+      if (categoryFilter !== "ALL") params.append("categoryId", categoryFilter);
+      if (startDate) params.append("startDate", startDate);
+      if (endDate) params.append("endDate", endDate);
+
+      const url = `/api/transactions/export?${params.toString()}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Gagal mengunduh file CSV transaksi.");
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      const today = new Date().toISOString().split("T")[0];
+      a.download = `moneytrack-transaksi-${today}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+
+      toast.success("File CSV transaksi berhasil diekspor.");
+    } catch (err) {
+      toast.error(getErrorMessage(err));
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const handleRetry = () => {
     setLoading(true);
     setRefreshTrigger((prev) => prev + 1);
   };
 
+  const hasActiveFilters =
+    searchQuery !== "" ||
+    typeFilter !== "ALL" ||
+    accountFilter !== "ALL" ||
+    categoryFilter !== "ALL" ||
+    startDate !== "" ||
+    endDate !== "";
+
+  const startIndex = totalCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const endIndex = Math.min(currentPage * pageSize, totalCount);
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="Daftar Transaksi"
-        description="Kelola dan telusuri seluruh riwayat pemasukan serta pengeluaran finansial Anda."
+        description="Kelola, telusuri, dan ekspor riwayat arus kas pemasukan dan pengeluaran Anda."
       >
-        <Button
-          size="sm"
-          className="gap-2"
-          onClick={() => {
-            setTransactionToEdit(null);
-            setIsFormOpen(true);
-          }}
-        >
-          <Plus className="h-4 w-4" />
-          Catat Transaksi
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={handleExportCsv}
+            disabled={isExporting}
+          >
+            <Download className="h-4 w-4" />
+            {isExporting ? "Mengekspor..." : "Ekspor CSV"}
+          </Button>
+
+          <Button
+            size="sm"
+            className="gap-2"
+            onClick={() => {
+              setTransactionToEdit(null);
+              setIsFormOpen(true);
+            }}
+          >
+            <Plus className="h-4 w-4" />
+            Catat Transaksi
+          </Button>
+        </div>
       </PageHeader>
 
       {/* Filter & Search Bar */}
-      <Card className="p-4">
+      <Card className="p-4 space-y-3">
         <div className="flex flex-col md:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -199,10 +293,11 @@ export default function TransactionsPage() {
                 setCurrentPage(1);
               }}
               className="pl-9"
+              aria-label="Pencarian catatan transaksi"
             />
           </div>
 
-          <div className="flex flex-wrap sm:flex-nowrap gap-3">
+          <div className="flex flex-wrap sm:flex-nowrap gap-2 items-center">
             <select
               value={typeFilter}
               onChange={(e) => {
@@ -211,6 +306,7 @@ export default function TransactionsPage() {
                 setCurrentPage(1);
               }}
               className="h-9 rounded-md border border-input bg-card px-3 text-xs font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              aria-label="Filter tipe transaksi"
             >
               <option value="ALL">Semua Tipe</option>
               <option value="INCOME">Pemasukan (+)</option>
@@ -225,6 +321,7 @@ export default function TransactionsPage() {
                 setCurrentPage(1);
               }}
               className="h-9 rounded-md border border-input bg-card px-3 text-xs font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              aria-label="Filter akun keuangan"
             >
               <option value="ALL">Semua Akun</option>
               {accounts.map((acc) => (
@@ -233,8 +330,100 @@ export default function TransactionsPage() {
                 </option>
               ))}
             </select>
+
+            <select
+              value={categoryFilter}
+              onChange={(e) => {
+                setLoading(true);
+                setCategoryFilter(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="h-9 rounded-md border border-input bg-card px-3 text-xs font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              aria-label="Filter kategori"
+            >
+              <option value="ALL">Semua Kategori</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name} ({cat.type === "INCOME" ? "+" : "-"})
+                </option>
+              ))}
+            </select>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className={`gap-1.5 h-9 text-xs ${showAdvancedFilters ? "bg-muted" : ""}`}
+              onClick={() => setShowAdvancedFilters((prev) => !prev)}
+              aria-label="Filter tanggal lanjutan"
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5" />
+              <span>Tanggal</span>
+            </Button>
+
+            {hasActiveFilters && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-1 h-9 text-xs text-muted-foreground hover:text-foreground"
+                onClick={handleResetFilters}
+                title="Reset semua filter"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                <span>Reset</span>
+              </Button>
+            )}
           </div>
         </div>
+
+        {/* Advanced Date Range Filter */}
+        {showAdvancedFilters && (
+          <div className="pt-2 border-t border-border flex flex-wrap items-center gap-3 text-xs">
+            <span className="text-muted-foreground font-semibold">Rentang Tanggal:</span>
+            <div className="flex items-center gap-2">
+              <label htmlFor="startDate" className="text-muted-foreground">Dari:</label>
+              <Input
+                id="startDate"
+                type="date"
+                value={startDate}
+                onChange={(e) => {
+                  setLoading(true);
+                  setStartDate(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="h-8 w-36 text-xs"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label htmlFor="endDate" className="text-muted-foreground">Sampai:</label>
+              <Input
+                id="endDate"
+                type="date"
+                value={endDate}
+                onChange={(e) => {
+                  setLoading(true);
+                  setEndDate(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="h-8 w-36 text-xs"
+              />
+            </div>
+            {(startDate || endDate) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 text-[11px] text-muted-foreground"
+                onClick={() => {
+                  setLoading(true);
+                  setStartDate("");
+                  setEndDate("");
+                  setCurrentPage(1);
+                }}
+              >
+                Hapus Tanggal
+              </Button>
+            )}
+          </div>
+        )}
       </Card>
 
       {/* Table Content */}
@@ -260,15 +449,19 @@ export default function TransactionsPage() {
             icon={<ArrowLeftRight className="h-10 w-10 text-muted-foreground" />}
             title="Tidak Ada Transaksi Ditemukan"
             description={
-              searchQuery || typeFilter !== "ALL" || accountFilter !== "ALL"
+              hasActiveFilters
                 ? "Tidak ada transaksi yang cocok dengan kriteria filter atau pencarian Anda."
                 : "Anda belum mencatat transaksi keuangan apapun. Mulai dengan mencatat transaksi pertama Anda."
             }
-            actionLabel="Catat Transaksi Baru"
-            onAction={() => {
-              setTransactionToEdit(null);
-              setIsFormOpen(true);
-            }}
+            actionLabel={hasActiveFilters ? "Reset Filter" : "Catat Transaksi Baru"}
+            onAction={
+              hasActiveFilters
+                ? handleResetFilters
+                : () => {
+                    setTransactionToEdit(null);
+                    setIsFormOpen(true);
+                  }
+            }
           />
         ) : (
           <div>
@@ -333,11 +526,12 @@ export default function TransactionsPage() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                              className="h-7 w-7 text-muted-foreground hover:text-foreground cursor-pointer"
                               onClick={() => {
                                 setTransactionToEdit(tx);
                                 setIsFormOpen(true);
                               }}
+                              aria-label="Edit transaksi"
                             >
                               <Edit2 className="h-3.5 w-3.5" />
                               <span className="sr-only">Edit</span>
@@ -345,8 +539,9 @@ export default function TransactionsPage() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-7 w-7 text-muted-foreground hover:text-red-600"
+                              className="h-7 w-7 text-muted-foreground hover:text-red-600 cursor-pointer"
                               onClick={() => setTransactionToDelete(tx)}
+                              aria-label="Hapus transaksi"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                               <span className="sr-only">Hapus</span>
@@ -361,11 +556,45 @@ export default function TransactionsPage() {
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex items-center justify-between px-4 py-3 border-t border-border text-xs text-muted-foreground">
-              <span>
-                Menampilkan {transactions.length} dari {totalCount} total transaksi
-              </span>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t border-border text-xs text-muted-foreground">
+              <div className="flex items-center gap-3">
+                <span>
+                  Menampilkan {startIndex} - {endIndex} dari {totalCount} total transaksi
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <span>Per baris:</span>
+                  <select
+                    value={pageSize}
+                    onChange={(e) => {
+                      setLoading(true);
+                      setPageSize(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                    className="h-7 rounded border border-input bg-card px-2 text-xs"
+                    aria-label="Jumlah transaksi per halaman"
+                  >
+                    <option value={10}>10</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  disabled={currentPage <= 1}
+                  onClick={() => {
+                    setLoading(true);
+                    setCurrentPage(1);
+                  }}
+                  title="Halaman Pertama"
+                  aria-label="Halaman Pertama"
+                >
+                  <ChevronsLeft className="h-4 w-4" />
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"
@@ -375,11 +604,13 @@ export default function TransactionsPage() {
                     setLoading(true);
                     setCurrentPage((p) => Math.max(1, p - 1));
                   }}
+                  title="Halaman Sebelumnya"
+                  aria-label="Halaman Sebelumnya"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
-                <span className="px-2 font-medium text-foreground">
-                  Halaman {currentPage} dari {totalPages}
+                <span className="px-3 font-medium text-foreground">
+                  {currentPage} / {totalPages}
                 </span>
                 <Button
                   variant="outline"
@@ -390,8 +621,24 @@ export default function TransactionsPage() {
                     setLoading(true);
                     setCurrentPage((p) => Math.min(totalPages, p + 1));
                   }}
+                  title="Halaman Berikutnya"
+                  aria-label="Halaman Berikutnya"
                 >
                   <ChevronRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => {
+                    setLoading(true);
+                    setCurrentPage(totalPages);
+                  }}
+                  title="Halaman Terakhir"
+                  aria-label="Halaman Terakhir"
+                >
+                  <ChevronsRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>

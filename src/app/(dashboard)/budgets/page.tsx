@@ -289,9 +289,24 @@ export default function BudgetsPage() {
                       <Target className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-semibold">
-                        {b.category?.name}
-                      </CardTitle>
+                      <div className="flex items-center gap-2">
+                        <CardTitle className="text-base font-semibold">
+                          {b.category?.name}
+                        </CardTitle>
+                        {isOver ? (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-400">
+                            Melebihi Batas
+                          </span>
+                        ) : isWarning ? (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">
+                            Waspada &gt;=80%
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">
+                            Terkendali
+                          </span>
+                        )}
+                      </div>
                       <CardDescription className="text-xs">
                         Batas Plafon: {formatIDR(b.amount)}
                       </CardDescription>

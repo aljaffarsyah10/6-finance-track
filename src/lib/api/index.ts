@@ -7,3 +7,4 @@ export * as transactionsApi from "./transactions";
 export * as budgetsApi from "./budgets";
 export * as dashboardApi from "./dashboard";
 export * as reportsApi from "./reports";
+export * as userApi from "./user";

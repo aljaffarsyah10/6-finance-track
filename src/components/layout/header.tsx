@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ThemeToggle } from "@/components/common/theme-toggle";
 import { MobileNavigation } from "./mobile-nav";
 
 export function Header() {
@@ -49,6 +50,8 @@ export function Header() {
             <span className="sm:hidden">Transaksi</span>
           </Button>
         </Link>
+
+        <ThemeToggle />
 
         <DropdownMenu>
           <DropdownMenuTrigger className="rounded-full h-9 w-9 border border-border inline-flex items-center justify-center cursor-pointer hover:bg-muted transition-colors">
