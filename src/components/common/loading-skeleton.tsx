@@ -1,6 +1,7 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export function SummaryCardSkeleton() {
   return (
@@ -28,19 +29,40 @@ export function TableSkeleton({ rows = 5 }: { rows?: number }) {
   );
 }
 
+export interface LoadingSkeletonProps {
+  className?: string;
+  count?: number;
+  variant?: "text" | "button" | "card" | "table-row" | "custom";
+}
+
 export function LoadingSkeleton({
   className,
   count = 1,
-}: {
-  className?: string;
-  count?: number;
-}) {
+  variant,
+}: LoadingSkeletonProps) {
+  const getDefaultClass = () => {
+    switch (variant) {
+      case "text":
+        return "h-4 w-3/4 rounded";
+      case "button":
+        return "h-9 w-28 rounded-lg";
+      case "card":
+        return "h-32 w-full rounded-xl";
+      case "table-row":
+        return "h-12 w-full rounded-lg";
+      default:
+        return "h-20 w-full rounded-xl";
+    }
+  };
+
   return (
     <div className="space-y-3">
       {Array.from({ length: count }).map((_, i) => (
-        <Skeleton key={i} className={className || "h-20 w-full rounded-xl"} />
+        <Skeleton
+          key={i}
+          className={cn(getDefaultClass(), className)}
+        />
       ))}
     </div>
   );
 }
-

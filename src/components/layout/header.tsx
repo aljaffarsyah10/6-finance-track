@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 import { Plus, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,13 +17,27 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MobileNavigation } from "./mobile-nav";
 
 export function Header() {
+  const { data: session } = useSession();
+  const userName = session?.user?.name || "Pengguna MoneyTrack";
+  const userEmail = session?.user?.email || "user@moneytrack.local";
+  const userInitials = (session?.user?.name || "MT")
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
+  };
+
   return (
     <header className="h-16 border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6">
       <div className="flex items-center gap-3">
         <MobileNavigation />
         <div className="hidden sm:flex flex-col">
           <span className="text-xs text-muted-foreground">Selamat Datang,</span>
-          <span className="text-sm font-semibold text-foreground">Pengguna MoneyTrack</span>
+          <span className="text-sm font-semibold text-foreground">{userName}</span>
         </div>
       </div>
 
@@ -39,16 +54,16 @@ export function Header() {
           <DropdownMenuTrigger className="rounded-full h-9 w-9 border border-border inline-flex items-center justify-center cursor-pointer hover:bg-muted transition-colors">
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-primary/10 text-primary font-semibold text-xs">
-                MT
+                {userInitials}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">Demo User</p>
+                <p className="text-sm font-medium leading-none">{userName}</p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  user@moneytrack.local
+                  {userEmail}
                 </p>
               </div>
             </DropdownMenuLabel>
@@ -60,12 +75,13 @@ export function Header() {
               </DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
-            <Link href="/login">
-              <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Keluar (Logout)</span>
-              </DropdownMenuItem>
-            </Link>
+            <DropdownMenuItem
+              className="cursor-pointer text-red-600 focus:text-red-600"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Keluar (Logout)</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -19,13 +19,12 @@ import {
   AccountFormValues,
 } from "@/lib/validations/account.schema";
 import { Account } from "@/types";
-import { toast } from "sonner";
 
 interface AccountDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   accountToEdit?: Account | null;
-  onSave: (data: AccountFormValues, id?: string) => void;
+  onSave: (data: AccountFormValues, id?: string) => Promise<void> | void;
 }
 
 export function AccountDialog({
@@ -66,12 +65,13 @@ export function AccountDialog({
     }
   }, [accountToEdit, reset, open]);
 
-  const onSubmit = (data: AccountFormValues) => {
-    onSave(data, accountToEdit?.id);
-    toast.success(
-      isEditing ? "Akun berhasil diperbarui" : "Akun baru berhasil dibuat"
-    );
-    onOpenChange(false);
+  const onSubmit = async (data: AccountFormValues) => {
+    try {
+      await onSave(data, accountToEdit?.id);
+      onOpenChange(false);
+    } catch {
+      // error handled by caller
+    }
   };
 
   return (

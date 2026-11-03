@@ -19,7 +19,6 @@ import {
   TransactionFormValues,
 } from "@/lib/validations/transaction.schema";
 import { Transaction, Account, Category } from "@/types";
-import { toast } from "sonner";
 
 interface TransactionDialogProps {
   open: boolean;
@@ -27,7 +26,7 @@ interface TransactionDialogProps {
   accounts: Account[];
   categories: Category[];
   transactionToEdit?: Transaction | null;
-  onSave: (data: TransactionFormValues, id?: string) => void;
+  onSave: (data: TransactionFormValues, id?: string) => Promise<void> | void;
 }
 
 export function TransactionDialog({
@@ -88,14 +87,13 @@ export function TransactionDialog({
     (c) => c.type === selectedType
   );
 
-  const onSubmit = (data: TransactionFormValues) => {
-    onSave(data, transactionToEdit?.id);
-    toast.success(
-      isEditing
-        ? "Transaksi berhasil diperbarui"
-        : "Transaksi berhasil dicatat"
-    );
-    onOpenChange(false);
+  const onSubmit = async (data: TransactionFormValues) => {
+    try {
+      await onSave(data, transactionToEdit?.id);
+      onOpenChange(false);
+    } catch {
+      // error handled by caller
+    }
   };
 
   return (

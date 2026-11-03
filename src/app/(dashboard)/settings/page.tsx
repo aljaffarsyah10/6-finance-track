@@ -1,11 +1,18 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { PageHeader } from "@/components/common/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, Shield, ChevronRight } from "lucide-react";
 
 export default function SettingsPage() {
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
+  };
+
   return (
     <div className="space-y-6 max-w-4xl">
       <PageHeader
@@ -63,7 +70,7 @@ export default function SettingsPage() {
               Zona Bahaya
             </CardTitle>
             <CardDescription>
-              Tindakan di bawah ini akan mengakhiri sesi aktif atau menghapus data Anda.
+              Tindakan di bawah ini akan mengakhiri sesi aktif Anda.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -73,11 +80,14 @@ export default function SettingsPage() {
                 Sesi Anda saat ini akan diakhiri pada perangkat ini.
               </p>
             </div>
-            <Link href="/login">
-              <Button variant="outline" size="sm" className="text-red-600 border-red-200 hover:bg-red-50 dark:hover:bg-red-950/30">
-                Keluar (Logout)
-              </Button>
-            </Link>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="text-red-600 border-red-200 hover:bg-red-50 dark:hover:bg-red-950/30 cursor-pointer"
+            >
+              Keluar (Logout)
+            </Button>
           </CardContent>
         </Card>
       </div>

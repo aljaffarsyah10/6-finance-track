@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { Menu, Wallet, LogOut } from "lucide-react";
 import {
   Sheet,
@@ -64,14 +65,16 @@ export function MobileNavigation() {
         </nav>
 
         <div className="p-4 border-t border-border mt-auto">
-          <Link
-            href="/login"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+          <button
+            onClick={() => {
+              setOpen(false);
+              signOut({ callbackUrl: "/login" });
+            }}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer text-left"
           >
             <LogOut className="h-4 w-4 shrink-0" />
             <span>Keluar</span>
-          </Link>
+          </button>
         </div>
       </SheetContent>
     </Sheet>

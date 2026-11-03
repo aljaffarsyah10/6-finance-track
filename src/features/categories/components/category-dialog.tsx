@@ -19,14 +19,13 @@ import {
   CategoryFormValues,
 } from "@/lib/validations/category.schema";
 import { Category } from "@/types";
-import { toast } from "sonner";
 
 interface CategoryDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   defaultType?: "INCOME" | "EXPENSE";
   categoryToEdit?: Category | null;
-  onSave: (data: CategoryFormValues, id?: string) => void;
+  onSave: (data: CategoryFormValues, id?: string) => Promise<void> | void;
 }
 
 export function CategoryDialog({
@@ -68,12 +67,13 @@ export function CategoryDialog({
     }
   }, [categoryToEdit, defaultType, reset, open]);
 
-  const onSubmit = (data: CategoryFormValues) => {
-    onSave(data, categoryToEdit?.id);
-    toast.success(
-      isEditing ? "Kategori berhasil diperbarui" : "Kategori baru berhasil dibuat"
-    );
-    onOpenChange(false);
+  const onSubmit = async (data: CategoryFormValues) => {
+    try {
+      await onSave(data, categoryToEdit?.id);
+      onOpenChange(false);
+    } catch {
+      // error handled by caller
+    }
   };
 
   return (

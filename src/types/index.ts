@@ -1,6 +1,6 @@
 /**
  * Core Application Types for MoneyTrack
- * Phase 5 - Frontend Feature Development Types
+ * Phase 7 - Frontend & Backend Integration Types
  */
 
 export type Currency = "IDR";
@@ -33,6 +33,7 @@ export interface Category {
   type: TransactionType;
   icon?: string | null;
   color?: string | null;
+  isDefault?: boolean;
   createdAt: string;
 }
 
@@ -71,4 +72,39 @@ export interface DashboardSummary {
   monthlyIncome: number;
   monthlyExpense: number;
   netCashFlow: number;
+}
+
+export interface PaginatedResult<T> {
+  success: boolean;
+  data: T[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export interface CashFlowReportItem {
+  month: number;
+  monthName: string;
+  income: number;
+  expense: number;
+  netCashFlow: number;
+}
+
+export interface ExpenseByCategoryReportItem {
+  categoryId: string;
+  categoryName: string;
+  color: string | null;
+  icon: string | null;
+  amount: number;
+  percentage: number;
+}
+
+export interface IncomeVsExpenseTrendItem {
+  month: number;
+  monthName: string;
+  income: number;
+  expense: number;
 }

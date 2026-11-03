@@ -19,7 +19,6 @@ import {
   BudgetFormValues,
 } from "@/lib/validations/budget.schema";
 import { Budget, Category } from "@/types";
-import { toast } from "sonner";
 
 interface BudgetDialogProps {
   open: boolean;
@@ -28,7 +27,7 @@ interface BudgetDialogProps {
   budgetToEdit?: Budget | null;
   currentMonth?: number;
   currentYear?: number;
-  onSave: (data: BudgetFormValues, id?: string) => void;
+  onSave: (data: BudgetFormValues, id?: string) => Promise<void> | void;
 }
 
 export function BudgetDialog({
@@ -77,12 +76,13 @@ export function BudgetDialog({
     }
   }, [budgetToEdit, currentMonth, currentYear, reset, expenseCategories, open]);
 
-  const onSubmit = (data: BudgetFormValues) => {
-    onSave(data, budgetToEdit?.id);
-    toast.success(
-      isEditing ? "Anggaran berhasil diperbarui" : "Anggaran baru berhasil disimpan"
-    );
-    onOpenChange(false);
+  const onSubmit = async (data: BudgetFormValues) => {
+    try {
+      await onSave(data, budgetToEdit?.id);
+      onOpenChange(false);
+    } catch {
+      // error handled by caller
+    }
   };
 
   return (

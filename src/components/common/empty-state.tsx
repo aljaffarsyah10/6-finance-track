@@ -1,11 +1,14 @@
 import React from "react";
 import { FolderOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface EmptyStateProps {
   title: string;
   description: string;
   icon?: React.ReactNode;
   action?: React.ReactNode;
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
 export function EmptyState({
@@ -13,6 +16,8 @@ export function EmptyState({
   description,
   icon,
   action,
+  actionLabel,
+  onAction,
 }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center p-8 sm:p-12 text-center rounded-xl border border-dashed border-border bg-card/50">
@@ -23,8 +28,13 @@ export function EmptyState({
       <p className="mt-1.5 max-w-sm text-sm text-muted-foreground mb-5">
         {description}
       </p>
-      {action && <div className="flex items-center gap-2">{action}</div>}
+      {action ? (
+        <div className="flex items-center gap-2">{action}</div>
+      ) : actionLabel && onAction ? (
+        <Button size="sm" onClick={onAction}>
+          {actionLabel}
+        </Button>
+      ) : null}
     </div>
   );
 }
-
