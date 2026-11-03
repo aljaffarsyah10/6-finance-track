@@ -1,5 +1,4 @@
-import { describe, it } from "node:test";
-import assert from "node:assert/strict";
+import { describe, it, expect } from "vitest";
 import {
   calculateAccountBalance,
   calculateNetCashFlow,
@@ -19,17 +18,17 @@ describe("Financial Calculation Engine & Unit Tests", () => {
     it("should calculate balance correctly with initial balance, income, and expense", () => {
       // PRD Example: Initial 1.000.000 + Income 3.000.000 - Expense 1.500.000 = 2.500.000
       const balance = calculateAccountBalance(BigInt(1000000), BigInt(3000000), BigInt(1500000));
-      assert.equal(balance, BigInt(2500000));
+      expect(balance).toBe(BigInt(2500000));
     });
 
     it("should handle zero initial balance", () => {
       const balance = calculateAccountBalance(BigInt(0), BigInt(5000000), BigInt(2000000));
-      assert.equal(balance, BigInt(3000000));
+      expect(balance).toBe(BigInt(3000000));
     });
 
     it("should allow negative balances (overdraft / cash deficit)", () => {
       const balance = calculateAccountBalance(BigInt(500000), BigInt(0), BigInt(1200000));
-      assert.equal(balance, BigInt(-700000));
+      expect(balance).toBe(BigInt(-700000));
     });
 
     it("should handle large integer numbers without precision loss", () => {
@@ -37,105 +36,129 @@ describe("Financial Calculation Engine & Unit Tests", () => {
       const largeIncome = BigInt("25000000000");  // 25 Miliar
       const largeExpense = BigInt("15000000000"); // 15 Miliar
       const balance = calculateAccountBalance(largeInitial, largeIncome, largeExpense);
-      assert.equal(balance, BigInt("60000000000"));
+      expect(balance).toBe(BigInt("60000000000"));
     });
   });
 
   describe("2. Net Cash Flow Calculation", () => {
     it("should calculate positive net cash flow (surplus)", () => {
       const net = calculateNetCashFlow(BigInt(10000000), BigInt(4000000));
-      assert.equal(net, BigInt(6000000));
+      expect(net).toBe(BigInt(6000000));
     });
 
     it("should calculate negative net cash flow (deficit)", () => {
       const net = calculateNetCashFlow(BigInt(3000000), BigInt(5500000));
-      assert.equal(net, BigInt(-2500000));
+      expect(net).toBe(BigInt(-2500000));
     });
 
     it("should calculate zero net cash flow when income equals expense", () => {
       const net = calculateNetCashFlow(BigInt(5000000), BigInt(5000000));
-      assert.equal(net, BigInt(0));
+      expect(net).toBe(BigInt(0));
     });
   });
 
   describe("3. Budget Usage & Remaining Calculation", () => {
     it("should calculate normal budget usage (< 80% is neither warning nor over)", () => {
       const result = calculateBudgetUsage(BigInt(500000), BigInt(2000000));
-      assert.equal(result.remaining, BigInt(1500000));
-      assert.equal(result.percentage, 25);
-      assert.equal(result.isWarning, false);
-      assert.equal(result.isOver, false);
+      expect(result.remaining).toBe(BigInt(1500000));
+      expect(result.percentage).toBe(25);
+      expect(result.isWarning).toBe(false);
+      expect(result.isOver).toBe(false);
     });
 
     it("should flag warning when usage is >= 80% and < 100%", () => {
       const result = calculateBudgetUsage(BigInt(850000), BigInt(1000000));
-      assert.equal(result.remaining, BigInt(150000));
-      assert.equal(result.percentage, 85);
-      assert.equal(result.isWarning, true);
-      assert.equal(result.isOver, false);
+      expect(result.remaining).toBe(BigInt(150000));
+      expect(result.percentage).toBe(85);
+      expect(result.isWarning).toBe(true);
+      expect(result.isOver).toBe(false);
     });
 
     it("should flag overbudget when usage is >= 100%", () => {
       const result = calculateBudgetUsage(BigInt(1200000), BigInt(1000000));
-      assert.equal(result.remaining, BigInt(-200000));
-      assert.equal(result.percentage, 120);
-      assert.equal(result.isOver, true);
-      assert.equal(result.isWarning, false);
+      expect(result.remaining).toBe(BigInt(-200000));
+      expect(result.percentage).toBe(120);
+      expect(result.isWarning).toBe(false);
+      expect(result.isOver).toBe(true);
     });
 
     it("should safeguard against zero division error when budget is 0", () => {
-      const result = calculateBudgetUsage(BigInt(0), BigInt(0));
-      assert.equal(result.remaining, BigInt(0));
-      assert.equal(result.percentage, 0);
-      assert.equal(result.isOver, false);
+      const result = calculateBudgetUsage(BigInt(500000), BigInt(0));
+      expect(result.remaining).toBe(BigInt(-500000));
+      expect(result.percentage).toBe(100);
+      expect(result.isWarning).toBe(false);
+      expect(result.isOver).toBe(true);
     });
   });
 
   describe("4. BigInt Serialization", () => {
     it("should serialize BigInt values to numbers when within safe integer limit", () => {
-      const obj = { id: "tx_1", amount: BigInt(1500000) };
-      const serialized = serializeBigInt(obj);
-      assert.equal(serialized.amount, 1500000);
-      assert.equal(typeof serialized.amount, "number");
+      const rawObject = {
+        id: "acc_1",
+        name: "BCA",
+        initialBalance: BigInt(5000000),
+        nested: {
+          amount: BigInt(250000),
+          label: "sample",
+        },
+        items: [BigInt(100), BigInt(200)],
+      };
+
+      const serialized = serializeBigInt(rawObject);
+      expect(serialized).toEqual({
+        id: "acc_1",
+        name: "BCA",
+        initialBalance: 5000000,
+        nested: {
+          amount: 250000,
+          label: "sample",
+        },
+        items: [100, 200],
+      });
     });
   });
 
   describe("5. Zod Schema Validation Rules", () => {
     it("should reject negative or zero transaction amounts", () => {
-      const invalidTx = {
+      const invalidPayloadZero = {
+        accountId: "acc_123",
+        categoryId: "cat_123",
         type: "EXPENSE",
-        amount: -5000,
-        accountId: "acc_1",
-        categoryId: "cat_1",
+        amount: 0,
         transactionDate: "2026-11-03",
+        description: "Zero test",
       };
-      const result = transactionSchema.safeParse(invalidTx);
-      assert.equal(result.success, false);
+      expect(transactionSchema.safeParse(invalidPayloadZero).success).toBe(false);
+
+      const invalidPayloadNegative = {
+        ...invalidPayloadZero,
+        amount: -50000,
+      };
+      expect(transactionSchema.safeParse(invalidPayloadNegative).success).toBe(false);
     });
 
     it("should reject non-integer transaction amounts", () => {
-      const floatTx = {
+      const invalidPayloadFloat = {
+        accountId: "acc_123",
+        categoryId: "cat_123",
         type: "EXPENSE",
-        amount: 50000.75,
-        accountId: "acc_1",
-        categoryId: "cat_1",
+        amount: 15000.5,
         transactionDate: "2026-11-03",
+        description: "Float test",
       };
-      const result = transactionSchema.safeParse(floatTx);
-      assert.equal(result.success, false);
+      expect(transactionSchema.safeParse(invalidPayloadFloat).success).toBe(false);
     });
 
     it("should accept valid transaction payload", () => {
-      const validTx = {
+      const validPayload = {
+        accountId: "acc_123",
+        categoryId: "cat_123",
         type: "INCOME",
-        amount: 2500000,
-        accountId: "acc_1",
-        categoryId: "cat_1",
+        amount: 5000000,
         transactionDate: "2026-11-03",
-        description: "Gaji bulanan",
+        description: "Gaji Bulanan",
       };
-      const result = transactionSchema.safeParse(validTx);
-      assert.equal(result.success, true);
+      expect(transactionSchema.safeParse(validPayload).success).toBe(true);
     });
 
     it("should validate account creation initialBalance >= 0", () => {
@@ -144,14 +167,14 @@ describe("Financial Calculation Engine & Unit Tests", () => {
         type: "BANK",
         initialBalance: 1000000,
       };
-      assert.equal(accountSchema.safeParse(validAcc).success, true);
+      expect(accountSchema.safeParse(validAcc).success).toBe(true);
 
       const invalidAcc = {
         name: "Bank BCA",
         type: "BANK",
         initialBalance: -500,
       };
-      assert.equal(accountSchema.safeParse(invalidAcc).success, false);
+      expect(accountSchema.safeParse(invalidAcc).success).toBe(false);
     });
 
     it("should validate budget month range 1-12", () => {
@@ -161,7 +184,7 @@ describe("Financial Calculation Engine & Unit Tests", () => {
         month: 11,
         year: 2026,
       };
-      assert.equal(budgetSchema.safeParse(validBudget).success, true);
+      expect(budgetSchema.safeParse(validBudget).success).toBe(true);
 
       const invalidBudget = {
         categoryId: "cat_1",
@@ -169,7 +192,7 @@ describe("Financial Calculation Engine & Unit Tests", () => {
         month: 13,
         year: 2026,
       };
-      assert.equal(budgetSchema.safeParse(invalidBudget).success, false);
+      expect(budgetSchema.safeParse(invalidBudget).success).toBe(false);
     });
   });
 
@@ -187,58 +210,55 @@ describe("Financial Calculation Engine & Unit Tests", () => {
     }
 
     it("should neutralize formula injection characters (=, +, -, @, \\t, \\r)", () => {
-      assert.equal(sanitizeCsvCell("=SUM(A1:A10)"), '"\'=SUM(A1:A10)"');
-      assert.equal(sanitizeCsvCell("+cmd|' /C calc'!A0"), '"\'+cmd|\' /C calc\'!A0"');
-      assert.equal(sanitizeCsvCell("-1234"), '"\'-1234"');
-      assert.equal(sanitizeCsvCell("@alert(1)"), '"\'@alert(1)"');
+      expect(sanitizeCsvCell("=SUM(A1:A10)")).toBe('"\'=SUM(A1:A10)"');
+      expect(sanitizeCsvCell("+cmd|' /C calc'!A0")).toBe('"\'+cmd|\' /C calc\'!A0"');
+      expect(sanitizeCsvCell("-1234")).toBe('"\'-1234"');
+      expect(sanitizeCsvCell("@alert(1)")).toBe('"\'@alert(1)"');
     });
 
     it("should properly escape double quotes", () => {
-      assert.equal(sanitizeCsvCell('Beli "Kopi" Enak'), '"Beli ""Kopi"" Enak"');
+      expect(sanitizeCsvCell('Beli "Kopi" Enak')).toBe('"Beli ""Kopi"" Enak"');
     });
 
     it("should handle null or undefined safely", () => {
-      assert.equal(sanitizeCsvCell(null), '""');
-      assert.equal(sanitizeCsvCell(undefined), '""');
+      expect(sanitizeCsvCell(null)).toBe('""');
+      expect(sanitizeCsvCell(undefined)).toBe('""');
     });
   });
 
   describe("7. User Profile & Password Change Schema Validation", () => {
     it("should validate profile update name length", () => {
-      assert.equal(updateProfileSchema.safeParse({ name: "A" }).success, false);
-      assert.equal(updateProfileSchema.safeParse({ name: "Budi Santoso" }).success, true);
+      expect(updateProfileSchema.safeParse({ name: "A" }).success).toBe(false);
+      expect(updateProfileSchema.safeParse({ name: "Budi Santoso" }).success).toBe(true);
     });
 
     it("should validate password change minimum length and confirmation match", () => {
       // Too short
-      assert.equal(
+      expect(
         changePasswordSchema.safeParse({
           currentPassword: "oldpassword123",
           newPassword: "short",
           confirmNewPassword: "short",
-        }).success,
-        false
-      );
+        }).success
+      ).toBe(false);
 
       // Mismatched
-      assert.equal(
+      expect(
         changePasswordSchema.safeParse({
           currentPassword: "oldpassword123",
           newPassword: "newpassword123",
           confirmNewPassword: "differentpassword123",
-        }).success,
-        false
-      );
+        }).success
+      ).toBe(false);
 
       // Valid
-      assert.equal(
+      expect(
         changePasswordSchema.safeParse({
           currentPassword: "oldpassword123",
           newPassword: "newpassword123",
           confirmNewPassword: "newpassword123",
-        }).success,
-        true
-      );
+        }).success
+      ).toBe(true);
     });
   });
 });

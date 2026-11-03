@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 export const updateProfileSchema = z.object({
-  name: z.string().min(2, "Nama lengkap minimal 2 karakter").max(100, "Nama maksimal 100 karakter"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Nama lengkap minimal 2 karakter")
+    .max(100, "Nama maksimal 100 karakter"),
 });
 
 export type UpdateProfileFormValues = z.infer<typeof updateProfileSchema>;
@@ -18,3 +22,4 @@ export const changePasswordSchema = z
   });
 
 export type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
+

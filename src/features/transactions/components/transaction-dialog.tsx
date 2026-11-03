@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
@@ -42,10 +42,10 @@ export function TransactionDialog({
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     reset,
     formState: { errors, isSubmitting },
+    control,
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -58,7 +58,7 @@ export function TransactionDialog({
     },
   });
 
-  const selectedType = watch("type");
+  const selectedType = useWatch({ control, name: "type" });
 
   useEffect(() => {
     if (transactionToEdit) {

@@ -11,9 +11,9 @@ function sanitizeCsvCell(value: unknown): string {
   if (value === null || value === undefined) {
     return '""';
   }
-  let str = String(value).trim();
-  // Check for dangerous formula injection trigger characters
-  if (/^[=+\-@\t\r]/.test(str)) {
+  let str = String(value);
+  // Check for dangerous formula injection trigger characters (including leading tabs/CR)
+  if (/^[=+\-@\t\r]/.test(str) || /^[=+\-@\t\r]/.test(str.trim())) {
     str = `'${str}`;
   }
   // Escape double quotes by doubling them
