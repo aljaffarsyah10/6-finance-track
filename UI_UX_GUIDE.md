@@ -263,3 +263,4 @@ Setiap komponen yang berinteraksi dengan API wajib memiliki 5 kondisi tampilan:
 ---
 
 *Akhir Dokumen — UI_UX_GUIDE.md*
+
