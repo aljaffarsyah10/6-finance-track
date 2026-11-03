@@ -62,3 +62,4 @@ test.describe("MoneyTrack End-to-End User Flow", () => {
     await expect(page.locator("text=Pengaturan Aplikasi")).toBeVisible();
   });
 });
+
