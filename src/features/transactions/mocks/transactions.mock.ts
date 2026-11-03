@@ -1,0 +1,103 @@
+/**
+ * MOCK DATA — TRANSACTIONS
+ * NOTE: This mock data is temporary for Phase 5 frontend feature development.
+ * It MUST be replaced with backend API calls in Phase 7.
+ */
+
+import { Transaction } from "@/types";
+import { mockAccounts } from "@/features/accounts/mocks/accounts.mock";
+import { mockCategories } from "@/features/categories/mocks/categories.mock";
+
+export const mockTransactions: Transaction[] = [
+  {
+    id: "tx_1",
+    userId: "user_demo",
+    accountId: "acc_2",
+    categoryId: "cat_inc_1",
+    type: "INCOME",
+    amount: 15000000,
+    description: "Gaji Pokok PT Teknologi Indonesia",
+    transactionDate: "2026-11-01T09:00:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_2"),
+    category: mockCategories.find((c) => c.id === "cat_inc_1"),
+    createdAt: "2026-11-01T09:00:00.000Z",
+  },
+  {
+    id: "tx_2",
+    userId: "user_demo",
+    accountId: "acc_2",
+    categoryId: "cat_exp_3",
+    type: "EXPENSE",
+    amount: 750000,
+    description: "Tagihan Listrik PLN & Internet Rumah",
+    transactionDate: "2026-11-02T14:30:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_2"),
+    category: mockCategories.find((c) => c.id === "cat_exp_3"),
+    createdAt: "2026-11-02T14:30:00.000Z",
+  },
+  {
+    id: "tx_3",
+    userId: "user_demo",
+    accountId: "acc_4",
+    categoryId: "cat_exp_1",
+    type: "EXPENSE",
+    amount: 85000,
+    description: "Makan Siang Restoran Padang",
+    transactionDate: "2026-11-02T12:15:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_4"),
+    category: mockCategories.find((c) => c.id === "cat_exp_1"),
+    createdAt: "2026-11-02T12:15:00.000Z",
+  },
+  {
+    id: "tx_4",
+    userId: "user_demo",
+    accountId: "acc_4",
+    categoryId: "cat_exp_2",
+    type: "EXPENSE",
+    amount: 45000,
+    description: "Ongkos Transportasi Ojek Online",
+    transactionDate: "2026-11-03T08:00:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_4"),
+    category: mockCategories.find((c) => c.id === "cat_exp_2"),
+    createdAt: "2026-11-03T08:00:00.000Z",
+  },
+  {
+    id: "tx_5",
+    userId: "user_demo",
+    accountId: "acc_2",
+    categoryId: "cat_inc_3",
+    type: "INCOME",
+    amount: 3500000,
+    description: "Pembayaran Pembuatan Website Landing Page",
+    transactionDate: "2026-11-03T16:00:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_2"),
+    category: mockCategories.find((c) => c.id === "cat_inc_3"),
+    createdAt: "2026-11-03T16:00:00.000Z",
+  },
+  {
+    id: "tx_6",
+    userId: "user_demo",
+    accountId: "acc_1",
+    categoryId: "cat_exp_1",
+    type: "EXPENSE",
+    amount: 35000,
+    description: "Beli Kopi Sore",
+    transactionDate: "2026-11-03T17:20:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_1"),
+    category: mockCategories.find((c) => c.id === "cat_exp_1"),
+    createdAt: "2026-11-03T17:20:00.000Z",
+  },
+  {
+    id: "tx_7",
+    userId: "user_demo",
+    accountId: "acc_3",
+    categoryId: "cat_exp_4",
+    type: "EXPENSE",
+    amount: 150000,
+    description: "Tiket Nonton Bioskop Akhir Pekan",
+    transactionDate: "2026-11-01T19:00:00.000Z",
+    account: mockAccounts.find((a) => a.id === "acc_3"),
+    category: mockCategories.find((c) => c.id === "cat_exp_4"),
+    createdAt: "2026-11-01T19:00:00.000Z",
+  },
+];
