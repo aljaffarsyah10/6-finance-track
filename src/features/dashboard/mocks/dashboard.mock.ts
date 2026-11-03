@@ -28,3 +28,4 @@ export const mockExpenseBreakdown = [
   { name: "Makanan & Minuman", value: 120000, color: "#f59e0b" },
   { name: "Transportasi", value: 45000, color: "#3b82f6" },
 ];
+

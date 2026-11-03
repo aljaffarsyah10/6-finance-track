@@ -17,3 +17,4 @@ export const mockAnnualTrendData = [
   { month: "Okt", income: 15500000, expense: 8900000, savings: 6600000 },
   { month: "Nov", income: 18500000, expense: 1065000, savings: 17435000 },
 ];
+
