@@ -21,6 +21,7 @@ Adopt a visual direction that is:
 - Visually distinctive without looking overly decorative.
 
 Avoid:
+
 - Generic AI-generated dashboard aesthetics.
 - Excessive gradients and glowing effects.
 - Overly saturated colors.
@@ -38,21 +39,25 @@ Create a cohesive, premium color palette.
 Use a sophisticated combination of:
 
 **Primary Colors**
+
 - Deep Navy / Midnight: `#101828`
 - Slate Dark: `#1E293B`
 - Muted Indigo: `#4F46E5`
 
 **Background Colors**
+
 - Main Background: `#F8FAFC`
 - Surface Background: `#FFFFFF`
 - Secondary Surface: `#F1F5F9`
 
 **Typography Colors**
+
 - Primary Text: `#0F172A`
 - Secondary Text: `#475569`
 - Muted Text: `#64748B`
 
 **Accent Colors**
+
 - Premium Blue: `#3B82F6`
 - Emerald: `#059669`
 - Amber: `#D97706`
@@ -61,6 +66,7 @@ Use a sophisticated combination of:
 Adapt the palette to the application's identity and purpose. These are starting references, not mandatory colors.
 
 Requirements:
+
 - Maintain strong contrast between text and backgrounds.
 - Use accent colors strategically, not everywhere.
 - Establish clear semantic colors for success, warning, error, and information.
@@ -82,17 +88,18 @@ Improve the entire typography system:
 
 Suggested typography scale:
 
-| Element | Font Size | Weight |
-|---|---:|---|
-| Page Title | 28–32px | 700 |
-| Section Title | 20–24px | 600 |
-| Card Title | 16–18px | 600 |
-| Body Text | 14–16px | 400–500 |
-| Secondary Text | 13–14px | 400 |
-| Labels | 12–14px | 500 |
-| Button Text | 14–15px | 600 |
+| Element        | Font Size | Weight  |
+| -------------- | --------: | ------- |
+| Page Title     |   28–32px | 700     |
+| Section Title  |   20–24px | 600     |
+| Card Title     |   16–18px | 600     |
+| Body Text      |   14–16px | 400–500 |
+| Secondary Text |   13–14px | 400     |
+| Labels         |   12–14px | 500     |
+| Button Text    |   14–15px | 600     |
 
 Additional requirements:
+
 - Use appropriate line heights.
 - Improve paragraph spacing.
 - Ensure secondary text remains readable.
@@ -121,6 +128,7 @@ Every page should feel intentionally designed rather than assembled from unrelat
 Redesign the navigation system to look professional and elegant.
 
 Requirements:
+
 - Clean and structured sidebar.
 - Clear navigation hierarchy.
 - Consistent icon sizes.
@@ -137,12 +145,14 @@ Navigation should be intuitive and easy to understand.
 Review and improve all existing UI components.
 
 ### Buttons
+
 - Establish primary, secondary, outline, ghost, and destructive variants.
 - Use consistent heights and padding.
 - Improve hover, active, disabled, and loading states.
 - Ensure buttons have clear visual hierarchy.
 
 ### Cards
+
 - Use clean surfaces and subtle borders.
 - Improve internal spacing.
 - Avoid unnecessary shadows.
@@ -150,6 +160,7 @@ Review and improve all existing UI components.
 - Use consistent border radii.
 
 ### Tables
+
 - Improve header readability.
 - Improve row spacing.
 - Add subtle row hover states.
@@ -158,6 +169,7 @@ Review and improve all existing UI components.
 - Ensure responsive table behavior.
 
 ### Forms
+
 - Improve input dimensions and typography.
 - Use clear labels.
 - Add intuitive focus states.
@@ -165,12 +177,14 @@ Review and improve all existing UI components.
 - Ensure accessible interactions.
 
 ### Badges and Status Indicators
+
 - Use subtle backgrounds.
 - Maintain semantic color consistency.
 - Avoid excessively bright colors.
 - Make status information immediately recognizable.
 
 ### Modals and Dropdowns
+
 - Improve spacing and visual hierarchy.
 - Use consistent dimensions.
 - Provide clear interaction feedback.
@@ -214,6 +228,7 @@ Ensure the entire application works beautifully on:
 - Mobile devices.
 
 Pay special attention to:
+
 - Navigation behavior.
 - Content overflow.
 - Table responsiveness.
