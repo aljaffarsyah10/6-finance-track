@@ -5,7 +5,22 @@ import { registerSchema } from "@/lib/validations/auth.schema";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: "BAD_REQUEST",
+            message: "Format JSON tidak valid atau body kosong.",
+          },
+        },
+        { status: 400 }
+      );
+    }
+
     const result = registerSchema.safeParse(body);
 
     if (!result.success) {
@@ -102,12 +117,17 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     console.error("Register API error:", error);
+    const errorMessage =
+      process.env.NODE_ENV === "development" && error instanceof Error
+        ? error.message
+        : "Terjadi kesalahan internal pada server";
+
     return NextResponse.json(
       {
         success: false,
         error: {
           code: "INTERNAL_ERROR",
-          message: "Terjadi kesalahan internal pada server",
+          message: errorMessage,
         },
       },
       { status: 500 }

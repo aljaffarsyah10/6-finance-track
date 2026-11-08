@@ -7,7 +7,7 @@ const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 function makePrismaClient() {
   const connectionString =
     process.env.DATABASE_URL ||
-    "postgresql://moneytrack:moneytrack_dev@localhost:5432/moneytrack";
+    "postgresql://postgres:aljaffarsyah@localhost:5432/moneytrack?schema=public";
 
   const pool = new Pool({ connectionString });
   const adapter = new PrismaPg(pool);
