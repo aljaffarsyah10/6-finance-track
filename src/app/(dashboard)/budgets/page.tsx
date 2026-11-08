@@ -265,22 +265,30 @@ export default function BudgetsPage() {
           }}
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 animate-fade-in-up">
           {budgets.map((b) => {
             const isOver = (b.percentage || 0) >= 100;
             const isWarning = (b.percentage || 0) >= 80 && !isOver;
-            const barColor = isOver
-              ? "bg-[#FF6B5B]"
+            const barGradient = isOver
+              ? "bg-gradient-to-r from-[#FF6B5B] via-[#FF5542] to-[#FF8577]"
               : isWarning
-              ? "bg-[#D97706]"
-              : "bg-[#0D9488]";
+              ? "bg-gradient-to-r from-[#D97706] via-[#F59E0B] to-[#FBBF24]"
+              : "bg-gradient-to-r from-[#0D9488] via-[#14B8A6] to-[#2DD4BF]";
 
             return (
-              <Card key={b.id} className="premium-card relative overflow-hidden rounded-2xl border border-border/80 hover:border-[#FF6B5B]/40 transition-all duration-200">
-                <CardHeader className="flex flex-row items-center justify-between pb-3">
+              <Card
+                key={b.id}
+                className="group premium-card relative overflow-hidden rounded-2xl border border-border/80 hover:border-[#FF6B5B]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                {/* Top accent line */}
+                <div
+                  className={`absolute top-0 left-0 right-0 h-1.5 ${barGradient} transition-all duration-300 group-hover:h-2`}
+                />
+
+                <CardHeader className="flex flex-row items-center justify-between pb-3 pt-5">
                   <div className="flex items-center gap-3">
                     <div
-                      className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 shadow-xs"
+                      className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0 shadow-xs transition-transform duration-300 group-hover:scale-110"
                       style={{
                         backgroundColor: `${b.category?.color || "#10b981"}20`,
                         color: b.category?.color || "#10b981",
@@ -290,34 +298,34 @@ export default function BudgetsPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <CardTitle className="text-base font-bold text-foreground">
+                        <CardTitle className="text-base font-extrabold text-foreground group-hover:text-[#FF6B5B] transition-colors">
                           {b.category?.name}
                         </CardTitle>
                         {isOver ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF6B5B]/15 text-[#FF6B5B]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FF6B5B]/15 text-[#FF6B5B] border border-[#FF6B5B]/30 animate-pulse">
                             Melebihi Batas
                           </span>
                         ) : isWarning ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D97706]/15 text-[#D97706] dark:text-[#FBBF24]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#D97706]/15 text-[#D97706] dark:text-[#FBBF24] border border-[#D97706]/30">
                             Waspada &gt;=80%
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0D9488]/15 text-[#0D9488] dark:text-[#2DD4BF]">
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#0D9488]/15 text-[#0D9488] dark:text-[#2DD4BF] border border-[#0D9488]/30">
                             Terkendali
                           </span>
                         )}
                       </div>
-                      <CardDescription className="text-xs font-medium">
-                        Batas Plafon: {formatIDR(b.amount)}
+                      <CardDescription className="text-xs font-semibold mt-0.5">
+                        Plafon: <span className="font-mono text-foreground font-bold">{formatIDR(b.amount)}</span>
                       </CardDescription>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg"
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg hover:bg-[#F4EDE4] dark:hover:bg-[#1E2D4A]"
                       onClick={() => {
                         setBudgetToEdit(b);
                         setIsDialogOpen(true);
@@ -329,7 +337,7 @@ export default function BudgetsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg"
+                      className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg hover:bg-[#FF6B5B]/10"
                       onClick={() => setBudgetToDelete(b)}
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -338,43 +346,43 @@ export default function BudgetsPage() {
                   </div>
                 </CardHeader>
 
-                <CardContent className="space-y-3">
+                <CardContent className="space-y-3 pb-5">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="text-muted-foreground">
                       Terpakai:{" "}
-                      <span className="font-mono text-foreground">
+                      <span className="font-mono font-bold text-foreground">
                         {formatIDR(b.spent || 0)}
                       </span>
                     </span>
                     <span
-                      className={`font-mono ${
+                      className={`font-mono font-bold ${
                         isOver
-                          ? "text-red-600 font-bold"
+                          ? "text-[#FF6B5B]"
                           : isWarning
-                          ? "text-amber-600 font-bold"
-                          : "text-muted-foreground"
+                          ? "text-[#D97706] dark:text-[#FBBF24]"
+                          : "text-[#0D9488] dark:text-[#2DD4BF]"
                       }`}
                     >
                       Sisa: {formatIDR(b.remaining || 0)} ({b.percentage}%)
                     </span>
                   </div>
 
-                  <div className="h-2.5 w-full bg-muted rounded-full overflow-hidden">
+                  <div className="h-3 w-full bg-[#F4EDE4] dark:bg-[#1E2D4A] rounded-full overflow-hidden p-0.5">
                     <div
-                      className={`h-full ${barColor} transition-all rounded-full`}
+                      className={`h-full ${barGradient} transition-all duration-500 rounded-full shadow-xs`}
                       style={{ width: `${Math.min(b.percentage || 0, 100)}%` }}
                     />
                   </div>
 
                   {isOver && (
-                    <p className="text-[11px] font-medium text-red-600 dark:text-red-400">
-                      ⚠️ Pengeluaran telah melebihi batas anggaran yang ditentukan!
-                    </p>
+                    <div className="p-2 rounded-lg bg-[#FF6B5B]/10 border border-[#FF6B5B]/20 text-[11px] font-bold text-[#FF6B5B] flex items-center gap-1.5">
+                      <span>⚠️</span> Pengeluaran telah melampaui plafon anggaran yang ditetapkan!
+                    </div>
                   )}
                   {isWarning && (
-                    <p className="text-[11px] font-medium text-amber-600 dark:text-amber-400">
-                      ⚡ Waspada! Pengeluaran telah mencapai 80% dari batas anggaran.
-                    </p>
+                    <div className="p-2 rounded-lg bg-[#D97706]/10 border border-[#D97706]/20 text-[11px] font-bold text-[#D97706] dark:text-[#FBBF24] flex items-center gap-1.5">
+                      <span>⚡</span> Pengeluaran mendekati batas kuota (≥ 80%).
+                    </div>
                   )}
                 </CardContent>
               </Card>

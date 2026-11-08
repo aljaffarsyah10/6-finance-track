@@ -198,16 +198,37 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Ringkasan Finansial"
-        description="Pantau kondisi saldo rekening, pemasukan, pengeluaran, dan progres anggaran Anda."
-      >
-        <Button size="sm" className="gap-2" onClick={() => setIsDialogOpen(true)}>
-          <Plus className="h-4 w-4" />
-          Catat Transaksi
-        </Button>
-      </PageHeader>
+    <div className="space-y-6 animate-fade-in-up">
+      {/* Luxury Hero Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#14213D] via-[#1B2B4E] to-[#14213D] p-6 sm:p-8 text-[#FAF7F2] shadow-xl border border-white/10 dark:border-white/5">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-[#FF6B5B] border border-white/10">
+              <span className="h-2 w-2 rounded-full bg-[#FF6B5B] animate-pulse" />
+              Financial Dashboard Overview
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Ringkasan Portofolio Keuangan
+            </h1>
+            <p className="text-sm text-slate-300 max-w-xl">
+              Pantau aset, arus kas bersih, dan efisiensi pengeluaran bulanan Anda secara real-time dengan presisi kalkulasi Rupiah.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button
+              size="lg"
+              className="gap-2 bg-[#FF6B5B] hover:bg-[#FF5542] text-white font-bold shadow-lg shadow-[#FF6B5B]/30 hover:shadow-[#FF6B5B]/45 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer rounded-xl px-5"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              <Plus className="h-5 w-5" />
+              Catat Transaksi Baru
+            </Button>
+          </div>
+        </div>
+        {/* Subtle glowing ambient spheres */}
+        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#FF6B5B]/15 blur-3xl animate-float" />
+        <div className="pointer-events-none absolute left-1/3 -bottom-16 h-48 w-48 rounded-full bg-[#0D9488]/15 blur-3xl" />
+      </div>
 
       {/* Metric Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -243,7 +264,7 @@ export default function DashboardPage() {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 premium-card rounded-2xl border border-border/80">
           <CardHeader>
             <CardTitle className="text-base font-semibold">
               Tren Arus Kas Bulanan
@@ -295,7 +316,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="premium-card rounded-2xl border border-border/80">
           <CardHeader>
             <CardTitle className="text-base font-semibold">
               Distribusi Pengeluaran
@@ -366,7 +387,7 @@ export default function DashboardPage() {
 
       {/* Recent Transactions & Budget Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="premium-card rounded-2xl border border-border/80">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
               <CardTitle className="text-base font-semibold">
@@ -391,11 +412,11 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={tx.id}
-                    className="flex items-center justify-between p-3 rounded-xl border border-border/70 hover:bg-[#F4EDE4]/40 dark:hover:bg-[#1E2D4A]/50 transition-all duration-150"
+                    className="flex items-center justify-between p-3 rounded-xl border border-border/70 hover:bg-[#F4EDE4]/60 dark:hover:bg-[#1E2D4A]/70 hover:translate-x-1 transition-all duration-200 cursor-pointer"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div
-                        className={`p-2.5 rounded-xl shrink-0 ${
+                        className={`p-2.5 rounded-xl shrink-0 transition-transform duration-200 group-hover:scale-105 ${
                           isIncome
                             ? "bg-[#0D9488]/12 text-[#0D9488] dark:bg-[#0D9488]/20 dark:text-[#2DD4BF]"
                             : "bg-[#FF6B5B]/12 text-[#FF6B5B] dark:bg-[#FF6B5B]/20 dark:text-[#FF6B5B]"
@@ -432,7 +453,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="premium-card rounded-2xl border border-border/80">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
               <CardTitle className="text-base font-semibold">

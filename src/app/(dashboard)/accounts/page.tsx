@@ -14,7 +14,7 @@ import { accountsApi } from "@/lib/api";
 import { getErrorMessage } from "@/lib/api/errors";
 import { AccountDialog } from "@/features/accounts/components/account-dialog";
 import { AccountFormValues } from "@/lib/validations/account.schema";
-import { formatIDR } from "@/lib/utils";
+import { formatIDR, cn } from "@/lib/utils";
 import { Account } from "@/types";
 import { toast } from "sonner";
 
@@ -184,30 +184,55 @@ export default function AccountsPage() {
           }}
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 animate-fade-in-up">
           {accounts.map((acc) => {
             const currentBal = acc.currentBalance ?? acc.initialBalance;
             return (
-              <Card key={acc.id} className="premium-card relative overflow-hidden rounded-2xl border border-border/80 bg-card hover:border-[#FF6B5B]/40 transition-all duration-200">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <Card
+                key={acc.id}
+                className="group premium-card relative overflow-hidden rounded-2xl border border-border/80 bg-card hover:border-[#FF6B5B]/50 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl"
+              >
+                {/* Decorative card glow background */}
+                <div
+                  className={cn(
+                    "pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full blur-2xl opacity-30 transition-opacity duration-300 group-hover:opacity-70",
+                    acc.type === "BANK" && "bg-blue-500/30",
+                    acc.type === "E_WALLET" && "bg-[#FF6B5B]/30",
+                    acc.type === "CASH" && "bg-emerald-500/30",
+                    acc.type === "OTHER" && "bg-amber-500/30"
+                  )}
+                />
+
+                {/* Top smart-card accent gradient line */}
+                <div
+                  className={cn(
+                    "absolute top-0 left-0 right-0 h-1.5 transition-all duration-300 group-hover:h-2",
+                    acc.type === "BANK" && "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-400",
+                    acc.type === "E_WALLET" && "bg-gradient-to-r from-[#FF6B5B] via-pink-500 to-purple-600",
+                    acc.type === "CASH" && "bg-gradient-to-r from-[#0D9488] via-emerald-500 to-teal-400",
+                    acc.type === "OTHER" && "bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400"
+                  )}
+                />
+
+                <CardHeader className="flex flex-row items-center justify-between pb-2 pt-5 relative z-10">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-xl bg-[#14213D]/8 text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FF6B5B] border border-border/50">
+                    <div className="p-3 rounded-xl bg-[#14213D]/8 text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FF6B5B] border border-border/50 transition-transform duration-300 group-hover:scale-110 shadow-xs">
                       {getAccountIcon(acc.type)}
                     </div>
                     <div>
-                      <CardTitle className="text-base font-bold text-foreground">
+                      <CardTitle className="text-base font-extrabold text-foreground group-hover:text-[#FF6B5B] transition-colors">
                         {acc.name}
                       </CardTitle>
-                      <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-[#F4EDE4] text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FAF7F2] uppercase tracking-wider mt-0.5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F4EDE4] text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FAF7F2] uppercase tracking-wider mt-1 border border-border/50">
                         {getAccountBadge(acc.type)}
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg"
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg hover:bg-[#F4EDE4] dark:hover:bg-[#1E2D4A]"
                       onClick={() => {
                         setAccountToEdit(acc);
                         setIsDialogOpen(true);
@@ -219,7 +244,7 @@ export default function AccountsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg"
+                      className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg hover:bg-[#FF6B5B]/10"
                       onClick={() => setAccountToDelete(acc)}
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -227,16 +252,16 @@ export default function AccountsPage() {
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="pt-2">
+                <CardContent className="pt-2 relative z-10">
                   <div className="space-y-1">
-                    <p className="text-xs font-medium text-muted-foreground">Saldo Saat Ini</p>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Saldo Saat Ini</p>
                     <p className="text-2xl font-extrabold font-mono tracking-tight text-foreground tabular-nums">
                       {formatIDR(currentBal)}
                     </p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-border/80 flex items-center justify-between text-[11px] text-muted-foreground">
+                  <div className="mt-4 pt-3 border-t border-border/80 flex items-center justify-between text-xs text-muted-foreground">
                     <span className="font-medium">Saldo Awal</span>
-                    <span className="font-mono font-semibold tabular-nums">{formatIDR(acc.initialBalance)}</span>
+                    <span className="font-mono font-semibold tabular-nums text-foreground">{formatIDR(acc.initialBalance)}</span>
                   </div>
                 </CardContent>
               </Card>

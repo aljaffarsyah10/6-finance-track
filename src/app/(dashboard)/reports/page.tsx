@@ -151,7 +151,7 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in-up">
       <PageHeader
         title="Laporan & Analitik Finansial"
         description="Analisis arus kas, distribusi pengeluaran, dan rasio tabungan tahunan Anda."

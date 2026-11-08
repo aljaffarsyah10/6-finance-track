@@ -34,13 +34,13 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 border-b border-border/80 bg-background/80 dark:bg-[#0B111E]/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-colors">
+    <header className="h-16 border-b border-border/80 bg-background/80 dark:bg-[#0B111E]/80 glass-nav sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 transition-all duration-200">
       <div className="flex items-center gap-3">
         <MobileNavigation />
         <div className="hidden sm:flex flex-col">
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#0D9488]" />
-            <span>Multi-Tenant Vault</span>
+            <span className="h-2 w-2 rounded-full bg-[#0D9488] animate-pulse" />
+            <span className="font-semibold">Multi-Tenant Vault</span>
           </div>
           <span className="text-sm font-bold text-foreground tracking-tight">
             {userName}
@@ -52,7 +52,7 @@ export function Header() {
         <Link href="/transactions">
           <Button
             size="sm"
-            className="gap-2 bg-[#14213D] hover:bg-[#1C2E54] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:hover:bg-[#FF5542] dark:text-white rounded-xl shadow-xs px-3.5 transition-all duration-150 font-semibold"
+            className="gap-2 bg-[#14213D] hover:bg-[#1C2E54] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:hover:bg-[#FF5542] dark:text-white rounded-xl shadow-xs px-3.5 transition-all duration-200 font-semibold hover:shadow-md hover:scale-[1.02]"
           >
             <Plus className="h-4 w-4 text-[#FF6B5B] dark:text-white" />
             <span className="hidden sm:inline">Catat Transaksi</span>
@@ -63,7 +63,7 @@ export function Header() {
         <ThemeToggle />
 
         <DropdownMenu>
-          <DropdownMenuTrigger className="rounded-full h-9 w-9 border border-border/80 inline-flex items-center justify-center cursor-pointer hover:bg-[#F4EDE4] dark:hover:bg-[#1E2D4A] transition-colors focus:outline-none focus:ring-2 focus:ring-[#14213D] dark:focus:ring-[#FF6B5B]">
+          <DropdownMenuTrigger className="rounded-full h-9 w-9 border border-border/80 inline-flex items-center justify-center cursor-pointer hover:border-[#FF6B5B]/50 hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B5B]">
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-[#14213D] text-[#FAF7F2] dark:bg-[#1E2D4A] dark:text-[#FF6B5B] font-bold text-xs">
                 {userInitials}

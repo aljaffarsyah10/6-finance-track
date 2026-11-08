@@ -437,7 +437,7 @@ export default function TransactionsPage() {
       </Card>
 
       {/* Table Content */}
-      <Card>
+      <Card className="premium-card rounded-2xl border border-border/80 overflow-hidden animate-fade-in-up">
         {loading ? (
           <div className="p-6 space-y-4">
             <LoadingSkeleton variant="table-row" className="h-10" />
@@ -490,7 +490,7 @@ export default function TransactionsPage() {
                   {(transactions || []).map((tx) => {
                     const isIncome = tx.type === "INCOME";
                     return (
-                      <TableRow key={tx.id}>
+                      <TableRow key={tx.id} className="hover:bg-[#F4EDE4]/60 dark:hover:bg-[#1E2D4A]/50 transition-colors group">
                         <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
                           {formatDate(tx.transactionDate, "dd MMM yyyy")}
                         </TableCell>

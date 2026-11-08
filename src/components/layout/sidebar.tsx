@@ -46,16 +46,16 @@ export function Sidebar({ className }: { className?: string }) {
     >
       {/* Brand Header */}
       <div className="h-16 flex items-center gap-3 px-5 border-b border-border">
-        <div className="relative h-10 w-10 rounded-xl bg-[#14213D] dark:bg-[#1E2D4A] text-[#FAF7F2] flex items-center justify-center font-bold shadow-xs border border-border/50">
-          <Wallet className="h-5 w-5 text-[#FF6B5B]" />
-          <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-[#FF6B5B] ring-2 ring-card" />
+        <div className="relative h-10 w-10 rounded-xl bg-[#14213D] dark:bg-[#1E2D4A] text-[#FAF7F2] flex items-center justify-center font-bold shadow-xs border border-border/50 group">
+          <Wallet className="h-5 w-5 text-[#FF6B5B] transition-transform duration-300 group-hover:scale-110" />
+          <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-[#FF6B5B] ring-2 ring-card animate-pulse-glow" />
         </div>
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
             <span className="font-extrabold text-base tracking-tight text-[#14213D] dark:text-[#FAF7F2]">
               MoneyTrack
             </span>
-            <span className="inline-flex items-center px-1.5 py-0.2 text-[9px] font-bold rounded-md bg-[#FF6B5B]/15 text-[#FF6B5B] uppercase tracking-wider">
+            <span className="inline-flex items-center px-1.5 py-0.2 text-[9px] font-bold rounded-md bg-[#FF6B5B]/15 text-[#FF6B5B] uppercase tracking-wider border border-[#FF6B5B]/20">
               PRO
             </span>
           </div>
@@ -81,16 +81,16 @@ export function Sidebar({ className }: { className?: string }) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
+                    "group relative flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[#14213D] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:text-white shadow-xs font-semibold"
-                      : "text-muted-foreground hover:bg-[#F4EDE4] hover:text-[#14213D] dark:hover:bg-[#1A2844] dark:hover:text-[#FAF7F2]"
+                      ? "bg-[#14213D] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:text-white shadow-md font-semibold translate-x-1"
+                      : "text-muted-foreground hover:bg-[#F4EDE4] hover:text-[#14213D] dark:hover:bg-[#1A2844] dark:hover:text-[#FAF7F2] hover:translate-x-0.5"
                   )}
                 >
                   <div className="flex items-center gap-3">
                     <Icon
                       className={cn(
-                        "h-4 w-4 shrink-0 transition-colors",
+                        "h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3",
                         isActive
                           ? "text-[#FF6B5B] dark:text-white"
                           : "text-muted-foreground group-hover:text-[#14213D] dark:group-hover:text-[#FAF7F2]"
@@ -99,7 +99,7 @@ export function Sidebar({ className }: { className?: string }) {
                     <span>{item.name}</span>
                   </div>
                   {isActive && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#FF6B5B] dark:bg-white" />
+                    <span className="h-2 w-2 rounded-full bg-[#FF6B5B] dark:bg-white shadow-xs animate-pulse" />
                   )}
                 </Link>
               );
@@ -121,16 +121,16 @@ export function Sidebar({ className }: { className?: string }) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150",
+                    "group relative flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[#14213D] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:text-white shadow-xs font-semibold"
-                      : "text-muted-foreground hover:bg-[#F4EDE4] hover:text-[#14213D] dark:hover:bg-[#1A2844] dark:hover:text-[#FAF7F2]"
+                      ? "bg-[#14213D] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:text-white shadow-md font-semibold translate-x-1"
+                      : "text-muted-foreground hover:bg-[#F4EDE4] hover:text-[#14213D] dark:hover:bg-[#1A2844] dark:hover:text-[#FAF7F2] hover:translate-x-0.5"
                   )}
                 >
                   <div className="flex items-center gap-3">
                     <Icon
                       className={cn(
-                        "h-4 w-4 shrink-0 transition-colors",
+                        "h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3",
                         isActive
                           ? "text-[#FF6B5B] dark:text-white"
                           : "text-muted-foreground group-hover:text-[#14213D] dark:group-hover:text-[#FAF7F2]"
@@ -139,7 +139,7 @@ export function Sidebar({ className }: { className?: string }) {
                     <span>{item.name}</span>
                   </div>
                   {isActive && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#FF6B5B] dark:bg-white" />
+                    <span className="h-2 w-2 rounded-full bg-[#FF6B5B] dark:bg-white shadow-xs animate-pulse" />
                   )}
                 </Link>
               );

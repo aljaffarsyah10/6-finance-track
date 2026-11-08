@@ -122,13 +122,13 @@ export default function CategoriesPage() {
     }
 
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 animate-fade-in-up">
         {list.map((cat) => (
-          <Card key={cat.id} className="premium-card group rounded-2xl border border-border/80 hover:border-[#FF6B5B]/40 transition-all duration-200">
+          <Card key={cat.id} className="premium-card group rounded-2xl border border-border/80 hover:border-[#FF6B5B]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3 min-w-0">
                 <div
-                  className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 shadow-xs"
+                  className="h-11 w-11 rounded-xl flex items-center justify-center shrink-0 shadow-xs transition-transform duration-300 group-hover:scale-110"
                   style={{
                     backgroundColor: `${cat.color || "#10b981"}20`,
                     color: cat.color || "#10b981",
