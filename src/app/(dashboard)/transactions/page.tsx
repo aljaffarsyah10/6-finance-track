@@ -258,7 +258,7 @@ export default function TransactionsPage() {
   const endIndex = Math.min(currentPage * pageSize, totalCount);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in-up">
       <PageHeader
         title="Daftar Transaksi"
         description="Kelola, telusuri, dan ekspor riwayat arus kas pemasukan dan pengeluaran Anda."
@@ -267,7 +267,7 @@ export default function TransactionsPage() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-2"
+            className="gap-2 cursor-pointer shadow-xs hover:border-[#FF6B5B]/40"
             onClick={handleExportCsv}
             disabled={isExporting}
           >
@@ -277,20 +277,20 @@ export default function TransactionsPage() {
 
           <Button
             size="sm"
-            className="gap-2"
+            className="gap-2 bg-gradient-to-r from-[#14213D] to-[#1E2D4A] dark:from-[#FF6B5B] dark:to-[#FF5542] text-white font-bold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer rounded-xl"
             onClick={() => {
               setTransactionToEdit(null);
               setIsFormOpen(true);
             }}
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-4 w-4 text-[#FF6B5B] dark:text-white" />
             Catat Transaksi
           </Button>
         </div>
       </PageHeader>
 
       {/* Filter & Search Bar */}
-      <Card className="p-4 space-y-3">
+      <Card className="premium-card p-4 space-y-3 rounded-2xl border border-border/80 bg-gradient-to-br from-card/95 via-card/85 to-card/75 backdrop-blur-xl shadow-lg">
         <div className="flex flex-col md:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

@@ -200,6 +200,33 @@ export default function ReportsPage() {
         </div>
       </PageHeader>
 
+      {/* Analytics Intelligence Card */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#14213D] via-[#1B2B4E] to-[#0A1120] p-6 text-white shadow-xl border border-white/10 card-shine">
+        <div className="dot-grid-pattern absolute inset-0 opacity-25 pointer-events-none" />
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-[#FF6B5B] border border-white/10">
+              <span className="h-2 w-2 rounded-full bg-[#0D9488] animate-pulse" />
+              Annual Telemetry Analysis {selectedYear}
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              Kinerja Finansial Komprehensif
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+              Evaluasi dinamika arus kas, identifikasi rasio tabungan, dan telusuri komposisi pengeluaran Anda sepanjang tahun {selectedYear}.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 self-start md:self-auto">
+            <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center min-w-[130px]">
+              <p className="text-[10px] uppercase font-bold text-slate-300">Rasio Tabungan</p>
+              <p className={`text-2xl font-extrabold font-mono ${savingsRate >= 20 ? "text-[#2DD4BF]" : "text-[#FF6B5B]"}`}>
+                {savingsRate}%
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Summary KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <SummaryCard

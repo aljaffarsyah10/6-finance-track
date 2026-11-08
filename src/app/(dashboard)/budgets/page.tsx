@@ -186,28 +186,29 @@ export default function BudgetsPage() {
       </PageHeader>
 
       {/* Budget Summary Card */}
-      <Card>
-        <CardContent className="p-6">
+      <Card className="premium-card relative overflow-hidden rounded-3xl border border-border/80 bg-gradient-to-br from-card/95 via-card/85 to-card/75 backdrop-blur-xl shadow-xl">
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#14213D] via-[#0D9488] to-[#FF6B5B]" />
+        <CardContent className="p-6 pt-7">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-1">
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 Total Plafon Terpakai ({monthNames[selectedMonth - 1]} {selectedYear})
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-extrabold font-mono tracking-tight text-foreground">
                   {formatIDR(totalSpent)}
                 </span>
-                <span className="text-sm font-semibold text-muted-foreground">
+                <span className="text-sm font-bold text-muted-foreground">
                   / {formatIDR(totalBudget)}
                 </span>
               </div>
             </div>
 
             <div className="flex items-center gap-6 text-sm">
-              <div>
-                <p className="text-xs text-muted-foreground">Sisa Anggaran</p>
+              <div className="p-3 rounded-2xl bg-white/50 dark:bg-black/20 border border-border/50">
+                <p className="text-[11px] font-semibold text-muted-foreground uppercase">Sisa Anggaran</p>
                 <p
-                  className={`text-lg font-bold font-mono ${
+                  className={`text-xl font-extrabold font-mono ${
                     totalRemaining < 0
                       ? "text-[#FF6B5B]"
                       : "text-[#0D9488] dark:text-[#2DD4BF]"
@@ -216,26 +217,19 @@ export default function BudgetsPage() {
                   {formatIDR(totalRemaining)}
                 </p>
               </div>
-              <div className="h-10 w-px bg-border/80" />
-              <div>
-                <p className="text-xs text-muted-foreground">Persentase</p>
-                <p className="text-lg font-bold font-mono text-foreground">
+              <div className="p-3 rounded-2xl bg-white/50 dark:bg-black/20 border border-border/50">
+                <p className="text-[11px] font-semibold text-muted-foreground uppercase">Utilisasi</p>
+                <p className="text-xl font-extrabold font-mono text-foreground">
                   {overallPercentage}%
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 h-3 w-full bg-[#F4EDE4] dark:bg-[#1E2D4A] rounded-full overflow-hidden">
+          <div className="mt-5 h-3.5 w-full bg-[#F4EDE4] dark:bg-[#1E2D4A] rounded-full overflow-hidden p-0.5">
             <div
-              className={`h-full transition-all rounded-full ${
-                overallPercentage >= 100
-                  ? "bg-[#FF6B5B]"
-                  : overallPercentage >= 80
-                  ? "bg-[#D97706]"
-                  : "bg-[#0D9488]"
-              }`}
-              style={{ width: `${overallPercentage}%` }}
+              className="h-full bg-gradient-to-r from-[#0D9488] via-[#14B8A6] to-[#FF6B5B] transition-all duration-500 rounded-full shadow-xs"
+              style={{ width: `${Math.min(overallPercentage, 100)}%` }}
             />
           </div>
         </CardContent>
