@@ -200,24 +200,40 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 animate-fade-in-up">
       {/* Luxury Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#14213D] via-[#1B2B4E] to-[#14213D] p-6 sm:p-8 text-[#FAF7F2] shadow-xl border border-white/10 dark:border-white/5">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#14213D] via-[#1B2B4E] to-[#0B111E] p-6 sm:p-8 text-[#FAF7F2] shadow-2xl border border-white/15 dark:border-white/10 card-shine">
+        {/* Dot Matrix Pattern */}
+        <div className="dot-grid-pattern absolute inset-0 opacity-30 pointer-events-none" />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-[#FF6B5B] border border-white/10">
-              <span className="h-2 w-2 rounded-full bg-[#FF6B5B] animate-pulse" />
-              Financial Dashboard Overview
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-[#FF6B5B] border border-white/10 shadow-xs">
+              <span className="h-2 w-2 rounded-full bg-[#FF6B5B] animate-pulse-glow" />
+              <span className="tracking-wide">MoneyTrack Intelligence Suite</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               Ringkasan Portofolio Keuangan
             </h1>
-            <p className="text-sm text-slate-300 max-w-xl">
+            <p className="text-sm text-slate-300 max-w-xl leading-relaxed">
               Pantau aset, arus kas bersih, dan efisiensi pengeluaran bulanan Anda secara real-time dengan presisi kalkulasi Rupiah.
             </p>
+            {/* Quick Live Telemetry Pills */}
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 backdrop-blur-md border border-white/10">
+                <span className="text-slate-300 font-medium">Status Kas:</span>
+                <span className={`font-bold ${summary.netCashFlow >= 0 ? "text-[#2DD4BF]" : "text-[#FF6B5B]"}`}>
+                  {summary.netCashFlow >= 0 ? "✦ Surplus Positif" : "✦ Defisit Terpantau"}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 backdrop-blur-md border border-white/10">
+                <span className="text-slate-300 font-medium">Akun Aktif:</span>
+                <span className="font-bold text-white">{(accounts || []).length} Rekening</span>
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <Button
               size="lg"
-              className="gap-2 bg-[#FF6B5B] hover:bg-[#FF5542] text-white font-bold shadow-lg shadow-[#FF6B5B]/30 hover:shadow-[#FF6B5B]/45 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer rounded-xl px-5"
+              className="gap-2.5 bg-gradient-to-r from-[#FF6B5B] to-[#FF5542] text-white font-extrabold shadow-xl shadow-[#FF6B5B]/35 hover:shadow-[#FF6B5B]/55 hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer rounded-2xl px-6 py-6 text-sm border border-white/20"
               onClick={() => setIsDialogOpen(true)}
             >
               <Plus className="h-5 w-5" />
@@ -226,8 +242,8 @@ export default function DashboardPage() {
           </div>
         </div>
         {/* Subtle glowing ambient spheres */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#FF6B5B]/15 blur-3xl animate-float" />
-        <div className="pointer-events-none absolute left-1/3 -bottom-16 h-48 w-48 rounded-full bg-[#0D9488]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#FF6B5B]/20 blur-3xl animate-float" />
+        <div className="pointer-events-none absolute left-1/3 -bottom-16 h-48 w-48 rounded-full bg-[#0D9488]/20 blur-3xl" />
       </div>
 
       {/* Metric Cards Grid */}
@@ -287,7 +303,17 @@ export default function DashboardPage() {
                   data={chartData}
                   margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.15} stroke="currentColor" />
+                  <defs>
+                    <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#2DD4BF" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#0D9488" stopOpacity={0.85} />
+                    </linearGradient>
+                    <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#FFA07A" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#FF6B5B" stopOpacity={0.9} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.12} stroke="currentColor" />
                   <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} />
                   <YAxis
                     stroke="var(--muted-foreground)"
@@ -301,15 +327,15 @@ export default function DashboardPage() {
                     contentStyle={{
                       backgroundColor: "var(--card)",
                       borderColor: "var(--border)",
-                      borderRadius: "0.75rem",
-                      boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                      borderRadius: "0.85rem",
+                      boxShadow: "0 12px 30px -5px rgba(0,0,0,0.15)",
                       fontSize: "0.8rem",
-                      fontWeight: 600,
+                      fontWeight: 700,
                     }}
                   />
-                  <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px", fontWeight: 500 }} />
-                  <Bar dataKey="income" name="Pemasukan" fill="#0D9488" radius={[6, 6, 0, 0]} />
-                  <Bar dataKey="expense" name="Pengeluaran" fill="#FF6B5B" radius={[6, 6, 0, 0]} />
+                  <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px", fontWeight: 600 }} />
+                  <Bar dataKey="income" name="Pemasukan" fill="url(#incomeGradient)" radius={[8, 8, 2, 2]} />
+                  <Bar dataKey="expense" name="Pengeluaran" fill="url(#expenseGradient)" radius={[8, 8, 2, 2]} />
                 </BarChart>
               </ResponsiveContainer>
             )}

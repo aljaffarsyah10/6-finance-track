@@ -37,7 +37,7 @@ import { transactionsApi, accountsApi, categoriesApi } from "@/lib/api";
 import { getErrorMessage } from "@/lib/api/errors";
 import { TransactionDialog } from "@/features/transactions/components/transaction-dialog";
 import { TransactionFormValues } from "@/lib/validations/transaction.schema";
-import { formatIDR, formatDate } from "@/lib/utils";
+import { formatIDR, formatDate, cn } from "@/lib/utils";
 import { Transaction, Account, Category, TransactionType } from "@/types";
 import { toast } from "sonner";
 
@@ -522,14 +522,17 @@ export default function TransactionsPage() {
                         <TableCell className="text-xs font-medium text-foreground whitespace-nowrap">
                           {tx.account?.name || "-"}
                         </TableCell>
-                        <TableCell
-                          className={`text-right text-xs font-extrabold font-mono tabular-nums whitespace-nowrap ${
-                            isIncome
-                              ? "text-[#0D9488] dark:text-[#2DD4BF]"
-                              : "text-[#FF6B5B]"
-                          }`}
-                        >
-                          {formatIDR(tx.amount, { type: tx.type })}
+                        <TableCell className="text-right whitespace-nowrap">
+                          <span
+                            className={cn(
+                              "inline-flex items-center px-2.5 py-1 rounded-xl text-xs font-mono font-extrabold tabular-nums border shadow-xs transition-colors",
+                              isIncome
+                                ? "bg-[#0D9488]/10 text-[#0D9488] border-[#0D9488]/20 dark:bg-[#0D9488]/20 dark:text-[#2DD4BF] dark:border-[#2DD4BF]/30"
+                                : "bg-[#FF6B5B]/10 text-[#FF6B5B] border-[#FF6B5B]/20 dark:bg-[#FF6B5B]/20 dark:text-[#FF6B5B] dark:border-[#FF6B5B]/30"
+                            )}
+                          >
+                            {formatIDR(tx.amount, { type: tx.type })}
+                          </span>
                         </TableCell>
                         <TableCell className="text-center">
                           <div className="flex items-center justify-center gap-1">

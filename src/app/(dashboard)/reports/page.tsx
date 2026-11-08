@@ -285,7 +285,17 @@ export default function ReportsPage() {
                       data={chartCashflow}
                       margin={{ top: 15, right: 10, left: 0, bottom: 0 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.15} stroke="currentColor" />
+                      <defs>
+                        <linearGradient id="reportIncomeGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#2DD4BF" stopOpacity={1} />
+                          <stop offset="100%" stopColor="#0D9488" stopOpacity={0.85} />
+                        </linearGradient>
+                        <linearGradient id="reportExpenseGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#FFA07A" stopOpacity={1} />
+                          <stop offset="100%" stopColor="#FF6B5B" stopOpacity={0.9} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.12} stroke="currentColor" />
                       <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} />
                       <YAxis
                         stroke="var(--muted-foreground)"
@@ -299,15 +309,15 @@ export default function ReportsPage() {
                         contentStyle={{
                           backgroundColor: "var(--card)",
                           borderColor: "var(--border)",
-                          borderRadius: "0.75rem",
-                          boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                          borderRadius: "0.85rem",
+                          boxShadow: "0 12px 30px -5px rgba(0,0,0,0.15)",
                           fontSize: "0.8rem",
-                          fontWeight: 600,
+                          fontWeight: 700,
                         }}
                       />
-                      <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px", fontWeight: 500 }} />
-                      <Bar dataKey="income" name="Pemasukan" fill="#0D9488" radius={[6, 6, 0, 0]} />
-                      <Bar dataKey="expense" name="Pengeluaran" fill="#FF6B5B" radius={[6, 6, 0, 0]} />
+                      <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px", fontWeight: 600 }} />
+                      <Bar dataKey="income" name="Pemasukan" fill="url(#reportIncomeGradient)" radius={[8, 8, 2, 2]} />
+                      <Bar dataKey="expense" name="Pengeluaran" fill="url(#reportExpenseGradient)" radius={[8, 8, 2, 2]} />
                     </BarChart>
                   </ResponsiveContainer>
                 )}

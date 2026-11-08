@@ -83,7 +83,7 @@ export function Sidebar({ className }: { className?: string }) {
                   className={cn(
                     "group relative flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[#14213D] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:text-white shadow-md font-semibold translate-x-1"
+                      ? "bg-gradient-to-r from-[#14213D] via-[#1E2D4A] to-[#14213D] text-[#FAF7F2] dark:from-[#FF6B5B] dark:to-[#FF5542] dark:text-white shadow-md font-semibold translate-x-1 border border-white/10 dark:border-white/20"
                       : "text-muted-foreground hover:bg-[#F4EDE4] hover:text-[#14213D] dark:hover:bg-[#1A2844] dark:hover:text-[#FAF7F2] hover:translate-x-0.5"
                   )}
                 >
@@ -123,7 +123,7 @@ export function Sidebar({ className }: { className?: string }) {
                   className={cn(
                     "group relative flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[#14213D] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:text-white shadow-md font-semibold translate-x-1"
+                      ? "bg-gradient-to-r from-[#14213D] via-[#1E2D4A] to-[#14213D] text-[#FAF7F2] dark:from-[#FF6B5B] dark:to-[#FF5542] dark:text-white shadow-md font-semibold translate-x-1 border border-white/10 dark:border-white/20"
                       : "text-muted-foreground hover:bg-[#F4EDE4] hover:text-[#14213D] dark:hover:bg-[#1A2844] dark:hover:text-[#FAF7F2] hover:translate-x-0.5"
                   )}
                 >
@@ -150,14 +150,16 @@ export function Sidebar({ className }: { className?: string }) {
 
       {/* Financial Health Mini Banner */}
       <div className="px-4 py-2">
-        <div className="p-3.5 rounded-xl bg-[#F4EDE4]/60 dark:bg-[#1A2844]/60 border border-border/80 flex items-start gap-2.5">
-          <Sparkles className="h-4 w-4 text-[#FF6B5B] shrink-0 mt-0.5" />
+        <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#F4EDE4] to-card dark:from-[#1E2D4A] dark:to-[#14213D] border border-border/80 shadow-xs flex items-start gap-2.5 relative overflow-hidden">
+          <div className="p-1.5 rounded-lg bg-[#FF6B5B]/15 text-[#FF6B5B] shrink-0 mt-0.5">
+            <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+          </div>
           <div className="text-[11px] leading-tight">
-            <span className="font-semibold text-foreground block mb-0.5">
-              Precision Finance
+            <span className="font-extrabold text-foreground block mb-0.5">
+              Precision Core
             </span>
             <span className="text-muted-foreground">
-              Perhitungan presisi integer Rupiah tanpa desimal error.
+              Aritmatika integer Rupiah 100% bebas dari pembulatan floating-point error.
             </span>
           </div>
         </div>

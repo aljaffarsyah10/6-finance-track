@@ -251,14 +251,79 @@
 /* Background ambient mesh */
 .ambient-glow-mesh {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 107, 91, 0.04) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(20, 33, 61, 0.04) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(13, 148, 136, 0.03) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(255, 107, 91, 0.05) 0px, transparent 45%),
+    radial-gradient(at 100% 0%, rgba(20, 33, 61, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(13, 148, 136, 0.04) 0px, transparent 50%);
 }
 
 .dark .ambient-glow-mesh {
   background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 107, 91, 0.07) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(30, 45, 74, 0.2) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(45, 212, 191, 0.04) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(255, 107, 91, 0.09) 0px, transparent 45%),
+    radial-gradient(at 100% 0%, rgba(30, 45, 74, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(45, 212, 191, 0.06) 0px, transparent 50%);
+}
+
+/* Luxury Gradient Text Utilities */
+.text-gradient-coral {
+  background: linear-gradient(135deg, #FF6B5B 0%, #FFA07A 50%, #FF5542 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #0D9488 0%, #14B8A6 50%, #2DD4BF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-navy {
+  background: linear-gradient(135deg, #14213D 0%, #223760 50%, #14213D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .text-gradient-navy {
+  background: linear-gradient(135deg, #FAF7F2 0%, #CBD5E1 50%, #FAF7F2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtle dot grid pattern for hero cards */
+.dot-grid-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* Fintech card metallic sheen */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 55%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  transition: transform 0.6s ease;
+}
+
+.card-shine:hover::after {
+  transform: rotate(25deg) translate(30%, 30%);
 }
