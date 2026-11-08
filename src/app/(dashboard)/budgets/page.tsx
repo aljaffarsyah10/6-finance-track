@@ -41,7 +41,7 @@ export default function BudgetsPage() {
       try {
         const cats = await categoriesApi.fetchCategories("EXPENSE");
         if (!ignore) {
-          setCategories(cats);
+          setCategories(Array.isArray(cats) ? cats : []);
         }
       } catch (err) {
         console.error("Gagal memuat kategori pengeluaran:", err);
@@ -61,7 +61,7 @@ export default function BudgetsPage() {
       try {
         const data = await budgetsApi.fetchBudgets(selectedMonth, selectedYear);
         if (!ignore) {
-          setBudgets(data);
+          setBudgets(Array.isArray(data) ? data : []);
           setError(null);
         }
       } catch (err) {
@@ -82,8 +82,8 @@ export default function BudgetsPage() {
     };
   }, [selectedMonth, selectedYear, refreshTrigger]);
 
-  const totalBudget = budgets.reduce((sum, b) => sum + b.amount, 0);
-  const totalSpent = budgets.reduce((sum, b) => sum + (b.spent || 0), 0);
+  const totalBudget = (budgets || []).reduce((sum, b) => sum + b.amount, 0);
+  const totalSpent = (budgets || []).reduce((sum, b) => sum + (b.spent || 0), 0);
   const totalRemaining = totalBudget - totalSpent;
   const overallPercentage =
     totalBudget > 0 ? Math.min(Math.round((totalSpent / totalBudget) * 100), 100) : 0;
@@ -253,7 +253,7 @@ export default function BudgetsPage() {
           description={error}
           onRetry={handleRetry}
         />
-      ) : budgets.length === 0 ? (
+      ) : (budgets || []).length === 0 ? (
         <EmptyState
           icon={<Target className="h-10 w-10 text-muted-foreground" />}
           title="Belum Ada Anggaran yang Disetel"

@@ -113,10 +113,20 @@ export default function TransactionsPage() {
         });
 
         if (!ignore) {
-          setTransactions(res.data);
-          if (res.pagination) {
-            setTotalPages(res.pagination.totalPages || 1);
-            setTotalCount(res.pagination.total || 0);
+          const list = Array.isArray(res?.data)
+            ? res.data
+            : Array.isArray((res as unknown as { transactions?: Transaction[] })?.transactions)
+            ? (res as unknown as { transactions: Transaction[] }).transactions
+            : Array.isArray(res)
+            ? (res as unknown as Transaction[])
+            : [];
+          setTransactions(list);
+          const pagination =
+            res?.pagination ||
+            (res as unknown as { pagination?: { totalPages?: number; total?: number } })?.pagination;
+          if (pagination) {
+            setTotalPages(pagination.totalPages || 1);
+            setTotalCount(pagination.total || 0);
           }
           setError(null);
         }
@@ -444,7 +454,7 @@ export default function TransactionsPage() {
               onRetry={handleRetry}
             />
           </div>
-        ) : transactions.length === 0 ? (
+        ) : (transactions || []).length === 0 ? (
           <EmptyState
             icon={<ArrowLeftRight className="h-10 w-10 text-muted-foreground" />}
             title="Tidak Ada Transaksi Ditemukan"
@@ -477,7 +487,7 @@ export default function TransactionsPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {transactions.map((tx) => {
+                  {(transactions || []).map((tx) => {
                     const isIncome = tx.type === "INCOME";
                     return (
                       <TableRow key={tx.id}>

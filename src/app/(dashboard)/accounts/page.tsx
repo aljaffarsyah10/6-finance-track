@@ -36,7 +36,7 @@ export default function AccountsPage() {
       try {
         const data = await accountsApi.fetchAccounts();
         if (!ignore) {
-          setAccounts(data);
+          setAccounts(Array.isArray(data) ? data : []);
           setError(null);
         }
       } catch (err) {
@@ -57,7 +57,7 @@ export default function AccountsPage() {
     };
   }, [refreshTrigger]);
 
-  const totalBalance = accounts.reduce(
+  const totalBalance = (accounts || []).reduce(
     (sum, acc) => sum + (acc.currentBalance ?? acc.initialBalance),
     0
   );
@@ -154,7 +154,7 @@ export default function AccountsPage() {
         <SummaryCard
           title="Total Kekayaan Bersih (Net Worth)"
           value={formatIDR(totalBalance)}
-          description={`Akumulasi saldo dari ${accounts.length} akun aktif`}
+          description={`Akumulasi saldo dari ${(accounts || []).length} akun aktif`}
           icon={<Wallet className="h-5 w-5" />}
         />
       </div>
@@ -172,7 +172,7 @@ export default function AccountsPage() {
           description={error}
           onRetry={handleRetry}
         />
-      ) : accounts.length === 0 ? (
+      ) : (accounts || []).length === 0 ? (
         <EmptyState
           icon={<Wallet className="h-10 w-10 text-muted-foreground" />}
           title="Belum Ada Akun Keuangan"

@@ -42,14 +42,13 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: {
-        transactions,
-        pagination: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit) || 1,
-        },
+      data: transactions,
+      transactions,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit) || 1,
       },
     });
   } catch (error: unknown) {

@@ -100,13 +100,13 @@ export default function DashboardPage() {
         ]);
 
         if (!ignore) {
-          setSummary(summaryRes);
-          setRecentTransactions(recentTxRes);
-          setExpenseBreakdown(expenseRes);
-          setCashFlowTrend(cashFlowRes);
-          setBudgets(budgetsRes);
-          setAccounts(accountsRes);
-          setCategories(categoriesRes);
+          setSummary(summaryRes || { totalBalance: 0, monthlyIncome: 0, monthlyExpense: 0, netCashFlow: 0 });
+          setRecentTransactions(Array.isArray(recentTxRes) ? recentTxRes : []);
+          setExpenseBreakdown(Array.isArray(expenseRes) ? expenseRes : []);
+          setCashFlowTrend(Array.isArray(cashFlowRes) ? cashFlowRes : []);
+          setBudgets(Array.isArray(budgetsRes) ? budgetsRes : []);
+          setAccounts(Array.isArray(accountsRes) ? accountsRes : []);
+          setCategories(Array.isArray(categoriesRes) ? categoriesRes : []);
           setError(null);
         }
       } catch (err) {
@@ -214,7 +214,7 @@ export default function DashboardPage() {
         <SummaryCard
           title="Total Saldo"
           value={formatIDR(summary.totalBalance)}
-          description={`Dari ${accounts.length} akun keuangan aktif`}
+          description={`Dari ${(accounts || []).length} akun keuangan aktif`}
           icon={<Wallet className="h-5 w-5" />}
           variant="default"
         />

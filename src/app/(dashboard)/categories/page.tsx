@@ -38,7 +38,7 @@ export default function CategoriesPage() {
       try {
         const data = await categoriesApi.fetchCategories();
         if (!ignore) {
-          setCategories(data);
+          setCategories(Array.isArray(data) ? data : []);
           setError(null);
         }
       } catch (err) {
@@ -59,8 +59,8 @@ export default function CategoriesPage() {
     };
   }, [refreshTrigger]);
 
-  const expenseCategories = categories.filter((c) => c.type === "EXPENSE");
-  const incomeCategories = categories.filter((c) => c.type === "INCOME");
+  const expenseCategories = (categories || []).filter((c) => c.type === "EXPENSE");
+  const incomeCategories = (categories || []).filter((c) => c.type === "INCOME");
 
   const handleSaveCategory = async (data: CategoryFormValues, id?: string) => {
     try {

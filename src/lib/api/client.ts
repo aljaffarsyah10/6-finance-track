@@ -83,6 +83,15 @@ class ApiClient {
       return result as unknown as T;
     }
 
+    const dataObj = result.data as Record<string, unknown> | undefined;
+    if (dataObj && typeof dataObj === "object" && !Array.isArray(dataObj) && dataObj.pagination) {
+      return {
+        success: result.success,
+        data: dataObj.transactions ?? dataObj.data ?? dataObj,
+        pagination: dataObj.pagination,
+      } as unknown as T;
+    }
+
     return (result.data !== undefined ? result.data : result) as T;
   }
 

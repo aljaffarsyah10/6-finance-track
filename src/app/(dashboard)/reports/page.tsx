@@ -61,8 +61,8 @@ export default function ReportsPage() {
           reportsApi.fetchExpenseReport(selectedMonth, selectedYear),
         ]);
         if (!ignore) {
-          setCashFlowData(cashFlowRes);
-          setExpenseData(expenseRes);
+          setCashFlowData(Array.isArray(cashFlowRes) ? cashFlowRes : []);
+          setExpenseData(Array.isArray(expenseRes) ? expenseRes : []);
           setError(null);
         }
       } catch (err) {
@@ -83,8 +83,8 @@ export default function ReportsPage() {
     };
   }, [selectedMonth, selectedYear, refreshTrigger]);
 
-  const totalAnnualIncome = cashFlowData.reduce((sum, d) => sum + d.income, 0);
-  const totalAnnualExpense = cashFlowData.reduce((sum, d) => sum + d.expense, 0);
+  const totalAnnualIncome = (cashFlowData || []).reduce((sum, d) => sum + d.income, 0);
+  const totalAnnualExpense = (cashFlowData || []).reduce((sum, d) => sum + d.expense, 0);
   const totalAnnualSavings = totalAnnualIncome - totalAnnualExpense;
   const savingsRate =
     totalAnnualIncome > 0
