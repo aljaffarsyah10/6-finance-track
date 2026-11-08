@@ -14,8 +14,11 @@ export default function DashboardLayout({
       <div className="pointer-events-none fixed -bottom-24 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#0D9488]/15 via-[#2DD4BF]/10 to-transparent blur-[130px] -z-10" />
       <div className="pointer-events-none fixed top-1/3 -left-20 w-[450px] h-[450px] rounded-full bg-gradient-to-br from-[#14213D]/12 to-transparent dark:from-[#1E2D4A]/40 blur-[120px] -z-10" />
 
-      <Sidebar className="hidden lg:flex" />
-      <div className="flex-1 flex flex-col min-w-0">
+      {/* Desktop Fixed Pinned Sidebar */}
+      <Sidebar className="hidden lg:flex fixed left-0 top-0 bottom-0 z-40 w-64 h-screen" />
+
+      {/* Main Content Area */}
+      <div className="lg:pl-64 flex flex-col min-w-0 min-h-screen">
         <Header />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto relative z-10">
           {children}

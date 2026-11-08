@@ -40,26 +40,26 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <aside
       className={cn(
-        "flex flex-col w-64 border-r border-border bg-card text-card-foreground h-screen sticky top-0 transition-colors",
+        "flex flex-col w-64 border-r border-border/80 bg-gradient-to-b from-card via-[#FAF7F2] to-[#F3EDE4] dark:from-[#0E1626] dark:via-[#111A2E] dark:to-[#0A101D] text-card-foreground h-screen transition-colors shadow-lg shadow-black/5 z-40",
         className
       )}
     >
-      {/* Brand Header */}
-      <div className="h-16 flex items-center gap-3 px-5 border-b border-border">
-        <div className="relative h-10 w-10 rounded-xl bg-[#14213D] dark:bg-[#1E2D4A] text-[#FAF7F2] flex items-center justify-center font-bold shadow-xs border border-border/50 group">
+      {/* Brand Header with subtle gradient */}
+      <div className="h-16 flex items-center gap-3 px-5 border-b border-border/80 bg-gradient-to-r from-card/90 via-card/80 to-card/90 backdrop-blur-md">
+        <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-[#14213D] via-[#1E2D4A] to-[#14213D] dark:from-[#1E2D4A] dark:to-[#0F172A] text-[#FAF7F2] flex items-center justify-center font-bold shadow-md border border-white/20 group">
           <Wallet className="h-5 w-5 text-[#FF6B5B] transition-transform duration-300 group-hover:scale-110" />
           <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-[#FF6B5B] ring-2 ring-card animate-pulse-glow" />
         </div>
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-base tracking-tight text-[#14213D] dark:text-[#FAF7F2]">
+            <span className="font-extrabold text-base tracking-tight text-gradient-navy">
               MoneyTrack
             </span>
-            <span className="inline-flex items-center px-1.5 py-0.2 text-[9px] font-bold rounded-md bg-[#FF6B5B]/15 text-[#FF6B5B] uppercase tracking-wider border border-[#FF6B5B]/20">
+            <span className="inline-flex items-center px-1.5 py-0.2 text-[9px] font-bold rounded-md bg-gradient-to-r from-[#FF6B5B]/20 to-[#FFA07A]/20 text-[#FF6B5B] uppercase tracking-wider border border-[#FF6B5B]/30 shadow-xs">
               PRO
             </span>
           </div>
-          <span className="text-[10.5px] text-muted-foreground tracking-wide font-medium">
+          <span className="text-[10px] text-muted-foreground tracking-wide font-medium">
             Financial Management
           </span>
         </div>
@@ -165,11 +165,11 @@ export function Sidebar({ className }: { className?: string }) {
         </div>
       </div>
 
-      {/* Logout & Footer */}
-      <div className="p-4 border-t border-border mt-auto">
+      {/* Logout & Footer with subtle gradient */}
+      <div className="p-4 border-t border-border/80 bg-gradient-to-r from-card/90 via-card/80 to-card/90 mt-auto">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#FF6B5B] hover:bg-[#FF6B5B]/10 dark:hover:bg-[#FF6B5B]/20 transition-colors cursor-pointer text-left"
+          className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#FF6B5B] hover:bg-gradient-to-r hover:from-[#FF6B5B]/15 hover:to-[#FF6B5B]/5 transition-all duration-200 cursor-pointer text-left"
         >
           <LogOut className="h-4 w-4 shrink-0" />
           <span className="font-semibold">Keluar (Logout)</span>
