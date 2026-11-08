@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -70,14 +71,16 @@ export function Header() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56 rounded-xl border border-border/80 shadow-lg bg-card">
-            <DropdownMenuLabel className="font-normal px-3 py-2.5">
-              <div className="flex flex-col space-y-1">
-                <p className="text-sm font-bold leading-none text-foreground">{userName}</p>
-                <p className="text-xs leading-none text-muted-foreground truncate">
-                  {userEmail}
-                </p>
-              </div>
-            </DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel className="font-normal px-3 py-2.5">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-bold leading-none text-foreground">{userName}</p>
+                  <p className="text-xs leading-none text-muted-foreground truncate">
+                    {userEmail}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <Link href="/settings">
               <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 font-medium">
