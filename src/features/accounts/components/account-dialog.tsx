@@ -50,6 +50,8 @@ export function AccountDialog({
   });
 
   useEffect(() => {
+    if (!open) return;
+
     if (accountToEdit) {
       reset({
         name: accountToEdit.name,
@@ -63,7 +65,7 @@ export function AccountDialog({
         initialBalance: 0,
       });
     }
-  }, [accountToEdit, reset, open]);
+  }, [open, accountToEdit, reset]);
 
   const onSubmit = async (data: AccountFormValues) => {
     try {

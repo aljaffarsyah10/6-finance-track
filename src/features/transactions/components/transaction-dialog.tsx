@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -60,7 +60,11 @@ export function TransactionDialog({
 
   const selectedType = useWatch({ control, name: "type" });
 
+  const defaultAccountId = useMemo(() => accounts?.[0]?.id || "", [accounts]);
+
   useEffect(() => {
+    if (!open) return;
+
     if (transactionToEdit) {
       reset({
         type: transactionToEdit.type,
@@ -75,16 +79,17 @@ export function TransactionDialog({
       reset({
         type: "EXPENSE",
         amount: undefined,
-        accountId: accounts[0]?.id || "",
+        accountId: defaultAccountId,
         categoryId: "",
         transactionDate: today,
         description: "",
       });
     }
-  }, [transactionToEdit, reset, accounts, open]);
+  }, [open, transactionToEdit, defaultAccountId, reset]);
 
-  const filteredCategories = categories.filter(
-    (c) => c.type === selectedType
+  const filteredCategories = useMemo(
+    () => (categories || []).filter((c) => c.type === selectedType),
+    [categories, selectedType]
   );
 
   const onSubmit = async (data: TransactionFormValues) => {

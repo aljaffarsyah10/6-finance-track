@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -56,9 +56,15 @@ export function BudgetDialog({
     },
   });
 
-  const expenseCategories = categories.filter((c) => c.type === "EXPENSE");
+  const expenseCategories = useMemo(
+    () => (categories || []).filter((c) => c.type === "EXPENSE"),
+    [categories]
+  );
+  const defaultCategoryId = expenseCategories[0]?.id || "";
 
   useEffect(() => {
+    if (!open) return;
+
     if (budgetToEdit) {
       reset({
         categoryId: budgetToEdit.categoryId,
@@ -68,13 +74,13 @@ export function BudgetDialog({
       });
     } else {
       reset({
-        categoryId: expenseCategories[0]?.id || "",
+        categoryId: defaultCategoryId,
         amount: undefined,
         month: currentMonth,
         year: currentYear,
       });
     }
-  }, [budgetToEdit, currentMonth, currentYear, reset, expenseCategories, open]);
+  }, [open, budgetToEdit, currentMonth, currentYear, defaultCategoryId, reset]);
 
   const onSubmit = async (data: BudgetFormValues) => {
     try {

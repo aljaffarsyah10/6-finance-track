@@ -52,6 +52,8 @@ export function CategoryDialog({
   });
 
   useEffect(() => {
+    if (!open) return;
+
     if (categoryToEdit) {
       reset({
         name: categoryToEdit.name,
@@ -65,7 +67,7 @@ export function CategoryDialog({
         color: defaultType === "INCOME" ? "#10b981" : "#ef4444",
       });
     }
-  }, [categoryToEdit, defaultType, reset, open]);
+  }, [open, categoryToEdit, defaultType, reset]);
 
   const onSubmit = async (data: CategoryFormValues) => {
     try {
