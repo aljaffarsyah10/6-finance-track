@@ -28,31 +28,31 @@ export default function SettingsPage() {
       <div className="grid gap-4">
         {/* Profile Card */}
         <Link href="/settings/profile" className="block group">
-          <Card className="transition-colors hover:border-primary/50">
+          <Card className="premium-card rounded-2xl border border-border/80 transition-all hover:border-[#FF6B5B]/40">
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
               <div className="flex items-center gap-4">
-                <div className="p-2.5 rounded-lg bg-primary/10 text-primary">
+                <div className="p-3 rounded-xl bg-[#14213D]/10 text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FF6B5B] border border-border/50">
                   <User className="h-5 w-5" />
                 </div>
                 <div>
-                  <CardTitle className="text-base font-semibold group-hover:text-primary transition-colors">
+                  <CardTitle className="text-base font-bold text-foreground group-hover:text-[#FF6B5B] transition-colors">
                     Profil & Keamanan Pengguna
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-xs font-medium">
                     Perbarui nama lengkap, alamat email, dan ubah kata sandi akun
                   </CardDescription>
                 </div>
               </div>
-              <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#FF6B5B] transition-colors" />
             </CardHeader>
           </Card>
         </Link>
 
         {/* Theme Settings Card */}
-        <Card>
+        <Card className="premium-card rounded-2xl border border-border/80">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Tema Tampilan</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-base font-bold text-foreground">Tema Tampilan</CardTitle>
+            <CardDescription className="text-xs font-medium">
               Pilih mode tampilan antarmuka yang paling nyaman untuk mata Anda.
             </CardDescription>
           </CardHeader>
@@ -61,23 +61,23 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <Button
                   variant={theme === "light" ? "default" : "outline"}
-                  className="gap-2 justify-center cursor-pointer"
+                  className="gap-2 justify-center cursor-pointer rounded-xl font-bold h-11"
                   onClick={() => setTheme("light")}
                 >
-                  <Sun className="h-4 w-4" />
-                  Mode Terang
+                  <Sun className="h-4 w-4 text-[#FF6B5B]" />
+                  Mode Terang (Navy/Cream)
                 </Button>
                 <Button
                   variant={theme === "dark" ? "default" : "outline"}
-                  className="gap-2 justify-center cursor-pointer"
+                  className="gap-2 justify-center cursor-pointer rounded-xl font-bold h-11"
                   onClick={() => setTheme("dark")}
                 >
-                  <Moon className="h-4 w-4" />
-                  Mode Gelap
+                  <Moon className="h-4 w-4 text-[#FF6B5B]" />
+                  Mode Gelap (Midnight)
                 </Button>
                 <Button
                   variant={theme === "system" ? "default" : "outline"}
-                  className="gap-2 justify-center cursor-pointer"
+                  className="gap-2 justify-center cursor-pointer rounded-xl font-bold h-11"
                   onClick={() => setTheme("system")}
                 >
                   <Laptop className="h-4 w-4" />
@@ -85,37 +85,37 @@ export default function SettingsPage() {
                 </Button>
               </div>
             ) : (
-              <div className="h-9 w-full bg-muted rounded animate-pulse" />
+              <div className="h-11 w-full bg-muted rounded-xl animate-pulse" />
             )}
           </CardContent>
         </Card>
 
         {/* Currency Card */}
-        <Card>
+        <Card className="premium-card rounded-2xl border border-border/80">
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <div className="flex items-center gap-4">
-              <div className="p-2.5 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
+              <div className="p-3 rounded-xl bg-[#0D9488]/12 text-[#0D9488] dark:bg-[#0D9488]/20 dark:text-[#2DD4BF] border border-border/50">
                 <Shield className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-base font-semibold">
+                <CardTitle className="text-base font-bold text-foreground">
                   Preferensi Finansial & Mata Uang
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-xs font-medium">
                   Mata uang dasar: IDR (Rupiah Indonesia - Rp) dengan format integer tanpa floating-point rounding bug.
                 </CardDescription>
               </div>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">
-              Default
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#F4EDE4] text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FAF7F2]">
+              Default IDR
             </span>
           </CardHeader>
         </Card>
 
         {/* Danger Zone */}
-        <Card className="border-red-200 dark:border-red-950">
+        <Card className="premium-card rounded-2xl border border-[#FF6B5B]/30 bg-card">
           <CardHeader>
-            <CardTitle className="text-base font-semibold text-red-600 dark:text-red-400">
+            <CardTitle className="text-base font-bold text-[#FF6B5B]">
               Zona Bahaya
             </CardTitle>
             <CardDescription>

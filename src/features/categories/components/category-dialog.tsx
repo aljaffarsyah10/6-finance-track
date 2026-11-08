@@ -92,23 +92,24 @@ export function CategoryDialog({
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
           <div className="space-y-1.5">
-            <Label htmlFor="categoryName">Nama Kategori</Label>
+            <Label htmlFor="categoryName" className="text-xs font-semibold">Nama Kategori</Label>
             <Input
               id="categoryName"
               placeholder="Contoh: Belanja Bulanan, Transportasi"
+              className="rounded-xl border-border/80 h-10 text-sm"
               {...register("name")}
             />
             {errors.name && (
-              <p className="text-xs text-red-500">{errors.name.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.name.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="categoryType">Tipe Kategori</Label>
+            <Label htmlFor="categoryType" className="text-xs font-semibold">Tipe Kategori</Label>
             <select
               id="categoryType"
               disabled={isEditing}
-              className="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm shadow-xs focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-60"
+              className="w-full h-10 px-3 rounded-xl border border-border/80 bg-card text-sm shadow-xs focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-60"
               {...register("type")}
             >
               <option value="EXPENSE" className="bg-popover text-foreground">
@@ -119,20 +120,20 @@ export function CategoryDialog({
               </option>
             </select>
             {errors.type && (
-              <p className="text-xs text-red-500">{errors.type.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.type.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="categoryColor">Warna Tag</Label>
+            <Label htmlFor="categoryColor" className="text-xs font-semibold">Warna Tag</Label>
             <div className="flex items-center gap-3">
               <input
                 id="categoryColor"
                 type="color"
-                className="h-9 w-12 rounded cursor-pointer border border-input bg-transparent"
+                className="h-10 w-14 rounded-xl cursor-pointer border border-border/80 bg-transparent p-0.5"
                 {...register("color")}
               />
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-muted-foreground font-medium">
                 Pilih warna identitas kategori
               </span>
             </div>
@@ -142,11 +143,16 @@ export function CategoryDialog({
             <Button
               type="button"
               variant="outline"
+              className="rounded-xl font-medium h-10"
               onClick={() => onOpenChange(false)}
             >
               Batal
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="rounded-xl bg-[#14213D] text-[#FAF7F2] hover:bg-[#1E2D4A] dark:bg-[#FF6B5B] dark:hover:bg-[#FF5542] dark:text-white font-bold h-10 px-5 shadow-xs"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Menyimpan..." : isEditing ? "Simpan Perubahan" : "Simpan Kategori"}
             </Button>
           </DialogFooter>

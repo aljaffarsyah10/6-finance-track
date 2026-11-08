@@ -209,14 +209,14 @@ export default function BudgetsPage() {
                 <p
                   className={`text-lg font-bold font-mono ${
                     totalRemaining < 0
-                      ? "text-red-600 dark:text-red-400"
-                      : "text-emerald-600 dark:text-emerald-400"
+                      ? "text-[#FF6B5B]"
+                      : "text-[#0D9488] dark:text-[#2DD4BF]"
                   }`}
                 >
                   {formatIDR(totalRemaining)}
                 </p>
               </div>
-              <div className="h-10 w-px bg-border" />
+              <div className="h-10 w-px bg-border/80" />
               <div>
                 <p className="text-xs text-muted-foreground">Persentase</p>
                 <p className="text-lg font-bold font-mono text-foreground">
@@ -226,14 +226,14 @@ export default function BudgetsPage() {
             </div>
           </div>
 
-          <div className="mt-4 h-3 w-full bg-muted rounded-full overflow-hidden">
+          <div className="mt-4 h-3 w-full bg-[#F4EDE4] dark:bg-[#1E2D4A] rounded-full overflow-hidden">
             <div
               className={`h-full transition-all rounded-full ${
                 overallPercentage >= 100
-                  ? "bg-red-500"
+                  ? "bg-[#FF6B5B]"
                   : overallPercentage >= 80
-                  ? "bg-amber-500"
-                  : "bg-emerald-500"
+                  ? "bg-[#D97706]"
+                  : "bg-[#0D9488]"
               }`}
               style={{ width: `${overallPercentage}%` }}
             />
@@ -270,13 +270,13 @@ export default function BudgetsPage() {
             const isOver = (b.percentage || 0) >= 100;
             const isWarning = (b.percentage || 0) >= 80 && !isOver;
             const barColor = isOver
-              ? "bg-red-500"
+              ? "bg-[#FF6B5B]"
               : isWarning
-              ? "bg-amber-500"
-              : "bg-emerald-500";
+              ? "bg-[#D97706]"
+              : "bg-[#0D9488]";
 
             return (
-              <Card key={b.id} className="relative overflow-hidden hover:border-primary/40 transition-colors">
+              <Card key={b.id} className="premium-card relative overflow-hidden rounded-2xl border border-border/80 hover:border-[#FF6B5B]/40 transition-all duration-200">
                 <CardHeader className="flex flex-row items-center justify-between pb-3">
                   <div className="flex items-center gap-3">
                     <div
@@ -290,24 +290,24 @@ export default function BudgetsPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <CardTitle className="text-base font-semibold">
+                        <CardTitle className="text-base font-bold text-foreground">
                           {b.category?.name}
                         </CardTitle>
                         {isOver ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-400">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF6B5B]/15 text-[#FF6B5B]">
                             Melebihi Batas
                           </span>
                         ) : isWarning ? (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D97706]/15 text-[#D97706] dark:text-[#FBBF24]">
                             Waspada &gt;=80%
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0D9488]/15 text-[#0D9488] dark:text-[#2DD4BF]">
                             Terkendali
                           </span>
                         )}
                       </div>
-                      <CardDescription className="text-xs">
+                      <CardDescription className="text-xs font-medium">
                         Batas Plafon: {formatIDR(b.amount)}
                       </CardDescription>
                     </div>
@@ -317,7 +317,7 @@ export default function BudgetsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg"
                       onClick={() => {
                         setBudgetToEdit(b);
                         setIsDialogOpen(true);
@@ -329,7 +329,7 @@ export default function BudgetsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-red-600"
+                      className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg"
                       onClick={() => setBudgetToDelete(b)}
                     >
                       <Trash2 className="h-3.5 w-3.5" />

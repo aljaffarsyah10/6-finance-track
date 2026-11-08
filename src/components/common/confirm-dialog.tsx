@@ -47,6 +47,7 @@ export function ConfirmDialog({
           <Button
             type="button"
             variant="outline"
+            className="rounded-xl font-medium h-10 px-4"
             disabled={isLoading}
             onClick={() => onOpenChange(false)}
           >
@@ -55,6 +56,11 @@ export function ConfirmDialog({
           <Button
             type="button"
             variant={variant}
+            className={`rounded-xl font-bold h-10 px-5 shadow-xs ${
+              variant === "destructive"
+                ? "bg-[#FF6B5B] hover:bg-[#FF5542] text-white"
+                : "bg-[#14213D] text-[#FAF7F2] hover:bg-[#1E2D4A] dark:bg-[#FF6B5B] dark:text-white"
+            }`}
             disabled={isLoading}
             onClick={() => {
               onConfirm();

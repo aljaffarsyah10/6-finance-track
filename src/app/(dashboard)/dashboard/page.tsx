@@ -182,7 +182,15 @@ export default function DashboardPage() {
     expense: item.expense,
   }));
 
-  const pieColors = ["#10b981", "#3b82f6", "#f59e0b", "#8b5cf6", "#ec4899", "#14b8a6", "#64748b"];
+  const pieColors = [
+    "#14213D",
+    "#FF6B5B",
+    "#0D9488",
+    "#D97706",
+    "#6366F1",
+    "#EC4899",
+    "#3B82F6",
+  ];
 
   return (
     <div className="space-y-6">
@@ -253,11 +261,13 @@ export default function DashboardPage() {
                   data={chartData}
                   margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="month" stroke="#888888" fontSize={12} />
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.15} stroke="currentColor" />
+                  <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} />
                   <YAxis
-                    stroke="#888888"
+                    stroke="var(--muted-foreground)"
                     fontSize={11}
+                    tickLine={false}
+                    axisLine={false}
                     tickFormatter={(val) => `${(val / 1000000).toFixed(0)} jt`}
                   />
                   <Tooltip
@@ -265,13 +275,15 @@ export default function DashboardPage() {
                     contentStyle={{
                       backgroundColor: "var(--card)",
                       borderColor: "var(--border)",
-                      borderRadius: "0.5rem",
-                      fontSize: "0.75rem",
+                      borderRadius: "0.75rem",
+                      boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                      fontSize: "0.8rem",
+                      fontWeight: 600,
                     }}
                   />
-                  <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "8px" }} />
-                  <Bar dataKey="income" name="Pemasukan" fill="#10b981" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="expense" name="Pengeluaran" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                  <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px", fontWeight: 500 }} />
+                  <Bar dataKey="income" name="Pemasukan" fill="#0D9488" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="expense" name="Pengeluaran" fill="#FF6B5B" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -317,8 +329,10 @@ export default function DashboardPage() {
                       contentStyle={{
                         backgroundColor: "var(--card)",
                         borderColor: "var(--border)",
-                        borderRadius: "0.5rem",
-                        fontSize: "0.75rem",
+                        borderRadius: "0.75rem",
+                        boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                        fontSize: "0.8rem",
+                        fontWeight: 600,
                       }}
                     />
                   </PieChart>
@@ -372,14 +386,14 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={tx.id}
-                    className="flex items-center justify-between p-2.5 rounded-lg border border-border/50 hover:bg-muted/30 transition-colors"
+                    className="flex items-center justify-between p-3 rounded-xl border border-border/70 hover:bg-[#F4EDE4]/40 dark:hover:bg-[#1E2D4A]/50 transition-all duration-150"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div
-                        className={`p-2 rounded-lg shrink-0 ${
+                        className={`p-2.5 rounded-xl shrink-0 ${
                           isIncome
-                            ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400"
-                            : "bg-red-100 text-red-600 dark:bg-red-950/60 dark:text-red-400"
+                            ? "bg-[#0D9488]/12 text-[#0D9488] dark:bg-[#0D9488]/20 dark:text-[#2DD4BF]"
+                            : "bg-[#FF6B5B]/12 text-[#FF6B5B] dark:bg-[#FF6B5B]/20 dark:text-[#FF6B5B]"
                         }`}
                       >
                         {isIncome ? (
@@ -389,7 +403,7 @@ export default function DashboardPage() {
                         )}
                       </div>
                       <div className="truncate">
-                        <p className="text-sm font-semibold text-foreground truncate">
+                        <p className="text-sm font-bold text-foreground truncate">
                           {tx.description || tx.category?.name || "Transaksi"}
                         </p>
                         <p className="text-xs text-muted-foreground truncate">
@@ -398,10 +412,10 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div
-                      className={`text-sm font-bold font-mono tabular-nums shrink-0 ml-3 ${
+                      className={`text-sm font-extrabold font-mono tabular-nums shrink-0 ml-3 ${
                         isIncome
-                          ? "text-emerald-600 dark:text-emerald-400"
-                          : "text-red-600 dark:text-red-400"
+                          ? "text-[#0D9488] dark:text-[#2DD4BF]"
+                          : "text-[#FF6B5B]"
                       }`}
                     >
                       {formatIDR(tx.amount, { type: tx.type })}
@@ -437,10 +451,10 @@ export default function DashboardPage() {
                 const isOver = (b.percentage || 0) >= 100;
                 const isWarning = (b.percentage || 0) >= 80 && !isOver;
                 const barColor = isOver
-                  ? "bg-red-500"
+                  ? "bg-[#FF6B5B]"
                   : isWarning
-                  ? "bg-amber-500"
-                  : "bg-emerald-500";
+                  ? "bg-[#D97706]"
+                  : "bg-[#0D9488]";
 
                 return (
                   <div key={b.id} className="space-y-1.5">

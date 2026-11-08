@@ -112,16 +112,16 @@ export function TransactionDialog({
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
           {/* Segmented Type Switcher */}
-          <div className="grid grid-cols-2 gap-2 p-1 bg-muted rounded-lg">
+          <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#F4EDE4] dark:bg-[#1E2D4A] rounded-xl">
             <button
               type="button"
               onClick={() => {
                 setValue("type", "EXPENSE");
                 setValue("categoryId", "");
               }}
-              className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
+              className={`py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                 selectedType === "EXPENSE"
-                  ? "bg-red-600 text-white shadow-xs"
+                  ? "bg-[#FF6B5B] text-white shadow-xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -133,9 +133,9 @@ export function TransactionDialog({
                 setValue("type", "INCOME");
                 setValue("categoryId", "");
               }}
-              className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
+              className={`py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                 selectedType === "INCOME"
-                  ? "bg-emerald-600 text-white shadow-xs"
+                  ? "bg-[#0D9488] text-white shadow-xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >

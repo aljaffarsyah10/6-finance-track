@@ -282,3 +282,4 @@ docker compose up -d --no-deps app
 
 ---
 *MoneyTrack siap beroperasi secara handal dan aman di lingkungan produksi.*
+

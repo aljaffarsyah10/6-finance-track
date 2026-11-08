@@ -124,7 +124,7 @@ export default function CategoriesPage() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {list.map((cat) => (
-          <Card key={cat.id} className="group hover:border-primary/40 transition-colors">
+          <Card key={cat.id} className="premium-card group rounded-2xl border border-border/80 hover:border-[#FF6B5B]/40 transition-all duration-200">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3 min-w-0">
                 <div
@@ -138,15 +138,15 @@ export default function CategoriesPage() {
                 </div>
                 <div className="truncate">
                   <div className="flex items-center gap-1.5">
-                    <p className="font-semibold text-sm text-foreground truncate">{cat.name}</p>
+                    <p className="font-bold text-sm text-foreground truncate">{cat.name}</p>
                     {cat.isDefault && (
-                      <span className="inline-flex items-center gap-0.5 text-[9px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground font-medium shrink-0">
-                        <ShieldCheck className="h-2.5 w-2.5" />
+                      <span className="inline-flex items-center gap-0.5 text-[9px] bg-[#F4EDE4] dark:bg-[#1E2D4A] px-1.5 py-0.5 rounded text-muted-foreground font-semibold shrink-0">
+                        <ShieldCheck className="h-2.5 w-2.5 text-[#0D9488]" />
                         Bawaan
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-muted-foreground">
+                  <p className="text-[11px] font-medium text-muted-foreground">
                     {cat.type === "EXPENSE" ? "Pos Pengeluaran" : "Pos Pemasukan"}
                   </p>
                 </div>
@@ -156,7 +156,7 @@ export default function CategoriesPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg"
                   onClick={() => {
                     setCategoryToEdit(cat);
                     setIsDialogOpen(true);
@@ -169,7 +169,7 @@ export default function CategoriesPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-muted-foreground hover:text-red-600"
+                    className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg"
                     onClick={() => setCategoryToDelete(cat)}
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -208,13 +208,13 @@ export default function CategoriesPage() {
         onValueChange={(val) => setActiveTab(val as "EXPENSE" | "INCOME")}
         className="w-full"
       >
-        <TabsList className="grid w-full max-w-md grid-cols-2">
-          <TabsTrigger value="EXPENSE" className="gap-2">
-            <ArrowDownRight className="h-4 w-4 text-red-500" />
+        <TabsList className="grid w-full max-w-md grid-cols-2 rounded-xl bg-[#F4EDE4] dark:bg-[#1E2D4A] p-1">
+          <TabsTrigger value="EXPENSE" className="gap-2 rounded-lg font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs">
+            <ArrowDownRight className="h-4 w-4 text-[#FF6B5B]" />
             Pengeluaran ({expenseCategories.length})
           </TabsTrigger>
-          <TabsTrigger value="INCOME" className="gap-2">
-            <ArrowUpRight className="h-4 w-4 text-emerald-500" />
+          <TabsTrigger value="INCOME" className="gap-2 rounded-lg font-semibold data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs">
+            <ArrowUpRight className="h-4 w-4 text-[#0D9488]" />
             Pemasukan ({incomeCategories.length})
           </TabsTrigger>
         </TabsList>

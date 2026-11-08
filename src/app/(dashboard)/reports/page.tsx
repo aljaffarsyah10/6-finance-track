@@ -98,7 +98,15 @@ export default function ReportsPage() {
     savings: d.netCashFlow,
   }));
 
-  const pieColors = ["#10b981", "#3b82f6", "#f59e0b", "#8b5cf6", "#ec4899", "#14b8a6", "#64748b"];
+  const pieColors = [
+    "#14213D",
+    "#FF6B5B",
+    "#0D9488",
+    "#D97706",
+    "#6366F1",
+    "#EC4899",
+    "#3B82F6",
+  ];
 
   const monthNames = [
     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
@@ -232,29 +240,29 @@ export default function ReportsPage() {
         />
       ) : (
         <Tabs defaultValue="cashflow" className="w-full">
-          <TabsList className="grid w-full max-w-lg grid-cols-3">
-            <TabsTrigger value="cashflow" className="gap-2 text-xs sm:text-sm">
-              <BarChart3 className="h-4 w-4" />
+          <TabsList className="grid w-full max-w-lg grid-cols-3 rounded-xl bg-[#F4EDE4] dark:bg-[#1E2D4A] p-1">
+            <TabsTrigger value="cashflow" className="gap-2 text-xs sm:text-sm font-semibold rounded-lg data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs">
+              <BarChart3 className="h-4 w-4 text-[#14213D] dark:text-[#FF6B5B]" />
               Arus Kas
             </TabsTrigger>
-            <TabsTrigger value="expenses" className="gap-2 text-xs sm:text-sm">
-              <PieIcon className="h-4 w-4" />
+            <TabsTrigger value="expenses" className="gap-2 text-xs sm:text-sm font-semibold rounded-lg data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs">
+              <PieIcon className="h-4 w-4 text-[#FF6B5B]" />
               Distribusi
             </TabsTrigger>
-            <TabsTrigger value="savings" className="gap-2 text-xs sm:text-sm">
-              <TrendingUp className="h-4 w-4" />
+            <TabsTrigger value="savings" className="gap-2 text-xs sm:text-sm font-semibold rounded-lg data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs">
+              <TrendingUp className="h-4 w-4 text-[#0D9488]" />
               Pertumbuhan
             </TabsTrigger>
           </TabsList>
 
           {/* Tab 1: Cashflow */}
           <TabsContent value="cashflow" className="mt-6 space-y-6">
-            <Card>
+            <Card className="premium-card rounded-2xl border border-border/80">
               <CardHeader>
-                <CardTitle className="text-base font-semibold">
+                <CardTitle className="text-base font-bold text-foreground">
                   Tren Arus Kas Bulanan (Pemasukan vs Pengeluaran)
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-xs font-medium">
                   Visualisasi perbandingan pendapatan dan belanja sepanjang tahun {selectedYear}
                 </CardDescription>
               </CardHeader>
@@ -272,11 +280,13 @@ export default function ReportsPage() {
                       data={chartCashflow}
                       margin={{ top: 15, right: 10, left: 0, bottom: 0 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                      <XAxis dataKey="month" stroke="#888888" fontSize={12} />
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.15} stroke="currentColor" />
+                      <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} />
                       <YAxis
-                        stroke="#888888"
+                        stroke="var(--muted-foreground)"
                         fontSize={11}
+                        tickLine={false}
+                        axisLine={false}
                         tickFormatter={(val) => `${(val / 1000000).toFixed(0)} jt`}
                       />
                       <Tooltip
@@ -284,13 +294,15 @@ export default function ReportsPage() {
                         contentStyle={{
                           backgroundColor: "var(--card)",
                           borderColor: "var(--border)",
-                          borderRadius: "0.5rem",
-                          fontSize: "0.75rem",
+                          borderRadius: "0.75rem",
+                          boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
                         }}
                       />
-                      <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px" }} />
-                      <Bar dataKey="income" name="Pemasukan" fill="#10b981" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="expense" name="Pengeluaran" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                      <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "12px", fontWeight: 500 }} />
+                      <Bar dataKey="income" name="Pemasukan" fill="#0D9488" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="expense" name="Pengeluaran" fill="#FF6B5B" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 )}
@@ -342,23 +354,25 @@ export default function ReportsPage() {
                           contentStyle={{
                             backgroundColor: "var(--card)",
                             borderColor: "var(--border)",
-                            borderRadius: "0.5rem",
-                            fontSize: "0.75rem",
+                            borderRadius: "0.75rem",
+                            boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
                           }}
                         />
-                        <Legend wrapperStyle={{ fontSize: "12px" }} />
+                        <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "8px" }} />
                       </PieChart>
                     </ResponsiveContainer>
                   )}
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="premium-card rounded-2xl border border-border/80">
                 <CardHeader>
-                  <CardTitle className="text-base font-semibold">
+                  <CardTitle className="text-base font-bold text-foreground">
                     Rincian Nominal Kategori
                   </CardTitle>
-                  <CardDescription>Peringkat pos pengeluaran tertinggi</CardDescription>
+                  <CardDescription className="text-xs font-medium">Peringkat pos pengeluaran tertinggi</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {expenseData.length === 0 ? (
@@ -376,17 +390,17 @@ export default function ReportsPage() {
                                 className="h-2.5 w-2.5 rounded-full shrink-0"
                                 style={{ backgroundColor: color }}
                               />
-                              <span className="font-semibold text-foreground truncate">
+                              <span className="font-bold text-foreground truncate">
                                 {idx + 1}. {item.categoryName}
                               </span>
                             </div>
-                            <span className="font-mono font-bold text-foreground shrink-0 ml-2">
+                            <span className="font-mono font-extrabold text-foreground shrink-0 ml-2">
                               {formatIDR(item.amount)} ({item.percentage}%)
                             </span>
                           </div>
-                          <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                          <div className="h-2 w-full bg-[#F4EDE4] dark:bg-[#1E2D4A] rounded-full overflow-hidden">
                             <div
-                              className="h-full rounded-full"
+                              className="h-full rounded-full transition-all duration-300"
                               style={{
                                 width: `${item.percentage}%`,
                                 backgroundColor: color,
@@ -404,12 +418,12 @@ export default function ReportsPage() {
 
           {/* Tab 3: Savings growth */}
           <TabsContent value="savings" className="mt-6 space-y-6">
-            <Card>
+            <Card className="premium-card rounded-2xl border border-border/80">
               <CardHeader>
-                <CardTitle className="text-base font-semibold">
+                <CardTitle className="text-base font-bold text-foreground">
                   Tren Akumulasi Tabungan Bersih
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-xs font-medium">
                   Pertumbuhan surplus atau defisit kas bersih bulanan sepanjang tahun {selectedYear}
                 </CardDescription>
               </CardHeader>
@@ -428,15 +442,17 @@ export default function ReportsPage() {
                     >
                       <defs>
                         <linearGradient id="savingsColor" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                          <stop offset="5%" stopColor="#0D9488" stopOpacity={0.4} />
+                          <stop offset="95%" stopColor="#0D9488" stopOpacity={0.0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                      <XAxis dataKey="month" stroke="#888888" fontSize={12} />
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.15} stroke="currentColor" />
+                      <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} />
                       <YAxis
-                        stroke="#888888"
+                        stroke="var(--muted-foreground)"
                         fontSize={11}
+                        tickLine={false}
+                        axisLine={false}
                         tickFormatter={(val) => `${(val / 1000000).toFixed(0)} jt`}
                       />
                       <Tooltip
@@ -444,16 +460,18 @@ export default function ReportsPage() {
                         contentStyle={{
                           backgroundColor: "var(--card)",
                           borderColor: "var(--border)",
-                          borderRadius: "0.5rem",
-                          fontSize: "0.75rem",
+                          borderRadius: "0.75rem",
+                          boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
                         }}
                       />
                       <Area
                         type="monotone"
                         dataKey="savings"
                         name="Tabungan Bersih"
-                        stroke="#10b981"
-                        strokeWidth={2}
+                        stroke="#0D9488"
+                        strokeWidth={2.5}
                         fillOpacity={1}
                         fill="url(#savingsColor)"
                       />

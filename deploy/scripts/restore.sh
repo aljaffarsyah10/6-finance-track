@@ -51,3 +51,4 @@ echo "[$(date -Iseconds)] Verification: checking database connectivity..."
 docker exec "${CONTAINER_NAME}" psql -U "${DB_USER}" -d "${DB_NAME}" -c "SELECT COUNT(*) FROM \"User\";"
 
 echo "[$(date -Iseconds)] Restore process complete!"
+

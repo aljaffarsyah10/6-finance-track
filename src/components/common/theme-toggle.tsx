@@ -29,15 +29,15 @@ export function ThemeToggle({ className }: { className?: string }) {
     <Button
       variant="ghost"
       size="icon"
-      className={`h-9 w-9 text-muted-foreground hover:text-foreground cursor-pointer ${className}`}
+      className={`h-9 w-9 text-muted-foreground hover:text-foreground hover:bg-[#F4EDE4] dark:hover:bg-[#1E2D4A] rounded-xl cursor-pointer transition-colors ${className}`}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      aria-label={isDark ? "Beralih ke tema terang" : "Beralih ke tema gelap"}
-      title={isDark ? "Beralih ke tema terang" : "Beralih ke tema gelap"}
+      aria-label={isDark ? "Beralih ke tema terang (Navy & Cream)" : "Beralih ke tema gelap (Midnight)"}
+      title={isDark ? "Beralih ke tema terang (Navy & Cream)" : "Beralih ke tema gelap (Midnight)"}
     >
       {isDark ? (
-        <Sun className="h-4 w-4 text-amber-400 transition-transform rotate-0" />
+        <Sun className="h-4 w-4 text-[#FF6B5B] transition-transform rotate-0" />
       ) : (
-        <Moon className="h-4 w-4 text-slate-700 transition-transform rotate-0" />
+        <Moon className="h-4 w-4 text-[#14213D] transition-transform rotate-0" />
       )}
       <span className="sr-only">Toggle tema</span>
     </Button>

@@ -98,3 +98,4 @@ Fitur-fitur opsional di luar cakupan rilis MVP v1.0.0 yang direncanakan untuk ve
 
 ---
 *MoneyTrack v1.0.0 siap digunakan untuk pengelolaan finansial pribadi yang handal, aman, dan akurat.*
+

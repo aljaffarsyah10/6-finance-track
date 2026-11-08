@@ -487,10 +487,10 @@ export default function TransactionsPage() {
                         <TableCell>
                           <div className="flex items-center gap-2.5">
                             <div
-                              className={`p-1.5 rounded-md shrink-0 ${
+                              className={`p-2 rounded-xl shrink-0 ${
                                 isIncome
-                                  ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400"
-                                  : "bg-red-100 text-red-600 dark:bg-red-950/60 dark:text-red-400"
+                                  ? "bg-[#0D9488]/12 text-[#0D9488] dark:bg-[#0D9488]/20 dark:text-[#2DD4BF]"
+                                  : "bg-[#FF6B5B]/12 text-[#FF6B5B] dark:bg-[#FF6B5B]/20 dark:text-[#FF6B5B]"
                               }`}
                             >
                               {isIncome ? (
@@ -513,10 +513,10 @@ export default function TransactionsPage() {
                           {tx.account?.name || "-"}
                         </TableCell>
                         <TableCell
-                          className={`text-right text-xs font-bold font-mono tabular-nums whitespace-nowrap ${
+                          className={`text-right text-xs font-extrabold font-mono tabular-nums whitespace-nowrap ${
                             isIncome
-                              ? "text-emerald-600 dark:text-emerald-400"
-                              : "text-red-600 dark:text-red-400"
+                              ? "text-[#0D9488] dark:text-[#2DD4BF]"
+                              : "text-[#FF6B5B]"
                           }`}
                         >
                           {formatIDR(tx.amount, { type: tx.type })}

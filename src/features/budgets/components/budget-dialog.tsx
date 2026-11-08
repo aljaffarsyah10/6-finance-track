@@ -99,11 +99,11 @@ export function BudgetDialog({
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
           <div className="space-y-1.5">
-            <Label htmlFor="budgetCateg">Kategori Pengeluaran</Label>
+            <Label htmlFor="budgetCateg" className="text-xs font-semibold">Kategori Pengeluaran</Label>
             <select
               id="budgetCateg"
               disabled={isEditing}
-              className="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm shadow-xs focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-60"
+              className="w-full h-10 px-3 rounded-xl border border-border/80 bg-card text-sm shadow-xs focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-60"
               {...register("categoryId")}
             >
               <option value="" disabled>
@@ -116,12 +116,12 @@ export function BudgetDialog({
               ))}
             </select>
             {errors.categoryId && (
-              <p className="text-xs text-red-500">{errors.categoryId.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.categoryId.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="budgetAmount">Batas Maksimal Anggaran (Rupiah)</Label>
+            <Label htmlFor="budgetAmount" className="text-xs font-semibold">Batas Maksimal Anggaran (Rupiah)</Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted-foreground">
                 Rp
@@ -130,12 +130,12 @@ export function BudgetDialog({
                 id="budgetAmount"
                 type="number"
                 placeholder="0"
-                className="pl-10 font-mono text-base font-bold"
+                className="pl-10 font-mono text-base font-extrabold rounded-xl border-border/80 h-10"
                 {...register("amount", { valueAsNumber: true })}
               />
             </div>
             {errors.amount && (
-              <p className="text-xs text-red-500">{errors.amount.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.amount.message}</p>
             )}
           </div>
 
@@ -143,11 +143,16 @@ export function BudgetDialog({
             <Button
               type="button"
               variant="outline"
+              className="rounded-xl font-medium h-10"
               onClick={() => onOpenChange(false)}
             >
               Batal
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="rounded-xl bg-[#14213D] text-[#FAF7F2] hover:bg-[#1E2D4A] dark:bg-[#FF6B5B] dark:hover:bg-[#FF5542] dark:text-white font-bold h-10 px-5 shadow-xs"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Menyimpan..." : isEditing ? "Simpan Perubahan" : "Tetapkan Anggaran"}
             </Button>
           </DialogFooter>

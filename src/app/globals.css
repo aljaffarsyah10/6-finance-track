@@ -35,6 +35,7 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-coral: var(--coral);
   --color-income: var(--income);
   --color-expense: var(--expense);
   --color-warning: var(--warning);
@@ -52,78 +53,87 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.596 0.145 163.225);
-  --primary-foreground: oklch(0.99 0 0);
-  --income: oklch(0.627 0.194 149.214);
-  --expense: oklch(0.577 0.245 27.325);
-  --warning: oklch(0.769 0.188 70.08);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Premium Palette: Deep Navy (#14213D), Warm Cream (#FAF7F2 / #F4EDE4), Vibrant Coral (#FF6B5B) */
+  --background: #FAF7F2;
+  --foreground: #14213D;
+  --card: #FFFFFF;
+  --card-foreground: #14213D;
+  --popover: #FFFFFF;
+  --popover-foreground: #14213D;
+  --primary: #14213D;
+  --primary-foreground: #FAF7F2;
+  --income: #0D9488;
+  --expense: #FF6B5B;
+  --warning: #D97706;
+  --secondary: #F4EDE4;
+  --secondary-foreground: #14213D;
+  --muted: #F4EDE4;
+  --muted-foreground: #5C6B80;
+  --accent: #F4EDE4;
+  --accent-foreground: #14213D;
+  --coral: #FF6B5B;
+  --coral-foreground: #FFFFFF;
+  --destructive: #FF6B5B;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5DDD0;
+  --input: #E5DDD0;
+  --ring: #14213D;
+  --chart-1: #14213D;
+  --chart-2: #FF6B5B;
+  --chart-3: #0D9488;
+  --chart-4: #D97706;
+  --chart-5: #6366F1;
+  --radius: 0.75rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #14213D;
+  --sidebar-primary: #14213D;
+  --sidebar-primary-foreground: #FAF7F2;
+  --sidebar-accent: #F4EDE4;
+  --sidebar-accent-foreground: #14213D;
+  --sidebar-border: #E5DDD0;
+  --sidebar-ring: #14213D;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.696 0.17 162.48);
-  --primary-foreground: oklch(0.12 0.05 163.225);
-  --income: oklch(0.696 0.17 149.214);
-  --expense: oklch(0.637 0.237 25.331);
-  --warning: oklch(0.795 0.184 86.047);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Dark Mode: Luxury Midnight (#0B111E), Deep Navy Elevated Surface (#14213D), Coral Highlight (#FF6B5B) */
+  --background: #0B111E;
+  --foreground: #FAF7F2;
+  --card: #14213D;
+  --card-foreground: #FAF7F2;
+  --popover: #14213D;
+  --popover-foreground: #FAF7F2;
+  --primary: #FF6B5B;
+  --primary-foreground: #FFFFFF;
+  --income: #2DD4BF;
+  --expense: #FF6B5B;
+  --warning: #FBBF24;
+  --secondary: #1E2D4A;
+  --secondary-foreground: #FAF7F2;
+  --muted: #1A2844;
+  --muted-foreground: #94A3B8;
+  --accent: #1E2D4A;
+  --accent-foreground: #FAF7F2;
+  --coral: #FF6B5B;
+  --coral-foreground: #FFFFFF;
+  --destructive: #FF6B5B;
+  --destructive-foreground: #FFFFFF;
+  --border: #223354;
+  --input: #223354;
+  --ring: #FF6B5B;
+  --chart-1: #FF6B5B;
+  --chart-2: #2DD4BF;
+  --chart-3: #60A5FA;
+  --chart-4: #FBBF24;
+  --chart-5: #A78BFA;
+  --radius: 0.75rem;
+  --sidebar: #0E1626;
+  --sidebar-foreground: #FAF7F2;
+  --sidebar-primary: #FF6B5B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #19263F;
+  --sidebar-accent-foreground: #FAF7F2;
+  --sidebar-border: #223354;
+  --sidebar-ring: #FF6B5B;
 }
 
 @layer base {
@@ -131,9 +141,34 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-[#FF6B5B]/20 selection:text-[#14213D];
   }
   html {
     @apply font-sans;
   }
+}
+
+/* Premium micro-interactions and surface aesthetics */
+.premium-card {
+  box-shadow: 0 4px 20px -2px rgba(20, 33, 61, 0.04), 0 2px 6px -1px rgba(20, 33, 61, 0.02);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.premium-card:hover {
+  box-shadow: 0 8px 30px -4px rgba(20, 33, 61, 0.08), 0 4px 10px -2px rgba(20, 33, 61, 0.04);
+}
+
+.dark .premium-card {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.dark .premium-card:hover {
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 107, 91, 0.3);
+}
+
+/* Glass effect */
+.glass-nav {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }

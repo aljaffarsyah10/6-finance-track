@@ -188,17 +188,17 @@ export default function AccountsPage() {
           {accounts.map((acc) => {
             const currentBal = acc.currentBalance ?? acc.initialBalance;
             return (
-              <Card key={acc.id} className="relative overflow-hidden hover:shadow-md transition-shadow">
+              <Card key={acc.id} className="premium-card relative overflow-hidden rounded-2xl border border-border/80 bg-card hover:border-[#FF6B5B]/40 transition-all duration-200">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-lg bg-muted border border-border">
+                    <div className="p-3 rounded-xl bg-[#14213D]/8 text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FF6B5B] border border-border/50">
                       {getAccountIcon(acc.type)}
                     </div>
                     <div>
-                      <CardTitle className="text-base font-semibold">
+                      <CardTitle className="text-base font-bold text-foreground">
                         {acc.name}
                       </CardTitle>
-                      <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-[#F4EDE4] text-[#14213D] dark:bg-[#1E2D4A] dark:text-[#FAF7F2] uppercase tracking-wider mt-0.5">
                         {getAccountBadge(acc.type)}
                       </span>
                     </div>
@@ -207,7 +207,7 @@ export default function AccountsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer rounded-lg"
                       onClick={() => {
                         setAccountToEdit(acc);
                         setIsDialogOpen(true);
@@ -219,7 +219,7 @@ export default function AccountsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-red-600"
+                      className="h-8 w-8 text-muted-foreground hover:text-[#FF6B5B] cursor-pointer rounded-lg"
                       onClick={() => setAccountToDelete(acc)}
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -229,14 +229,14 @@ export default function AccountsPage() {
                 </CardHeader>
                 <CardContent className="pt-2">
                   <div className="space-y-1">
-                    <p className="text-xs text-muted-foreground">Saldo Saat Ini</p>
-                    <p className="text-xl font-bold font-mono tracking-tight text-foreground">
+                    <p className="text-xs font-medium text-muted-foreground">Saldo Saat Ini</p>
+                    <p className="text-2xl font-extrabold font-mono tracking-tight text-foreground tabular-nums">
                       {formatIDR(currentBal)}
                     </p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-[11px] text-muted-foreground">
-                    <span>Saldo Awal</span>
-                    <span className="font-mono tabular-nums">{formatIDR(acc.initialBalance)}</span>
+                  <div className="mt-4 pt-3 border-t border-border/80 flex items-center justify-between text-[11px] text-muted-foreground">
+                    <span className="font-medium">Saldo Awal</span>
+                    <span className="font-mono font-semibold tabular-nums">{formatIDR(acc.initialBalance)}</span>
                   </div>
                 </CardContent>
               </Card>

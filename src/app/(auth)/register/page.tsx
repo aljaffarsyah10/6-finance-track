@@ -70,90 +70,93 @@ export default function RegisterPage() {
   };
 
   return (
-    <Card className="shadow-sm">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-xl font-bold">Daftar Akun Baru</CardTitle>
-        <CardDescription>
+    <Card className="premium-card rounded-2xl border border-border/80 bg-card shadow-lg">
+      <CardHeader className="space-y-1.5 pb-4">
+        <CardTitle className="text-xl font-extrabold text-foreground">Daftar Akun Baru</CardTitle>
+        <CardDescription className="text-xs font-medium">
           Mulai kelola keuangan pribadi Anda dengan terencana, transparan, dan aman.
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           {errorMessage && (
-            <div className="flex items-center gap-2 p-3 text-xs text-red-600 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-md">
+            <div className="flex items-center gap-2 p-3 text-xs font-semibold text-[#FF6B5B] bg-[#FF6B5B]/10 border border-[#FF6B5B]/25 rounded-xl">
               <AlertCircle className="h-4 w-4 shrink-0" />
               <span>{errorMessage}</span>
             </div>
           )}
 
-          <div className="space-y-2">
-            <Label htmlFor="name">Nama Lengkap</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="name" className="text-xs font-semibold">Nama Lengkap</Label>
             <Input
               id="name"
               placeholder="Nama Anda"
               disabled={isSubmitting}
+              className="rounded-xl border-border/80 h-10 text-sm"
               {...register("name")}
             />
             {errors.name && (
-              <p className="text-xs text-red-600">{errors.name.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.name.message}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="email" className="text-xs font-semibold">Email</Label>
             <Input
               id="email"
               type="email"
               placeholder="nama@email.com"
               disabled={isSubmitting}
+              className="rounded-xl border-border/80 h-10 text-sm"
               {...register("email")}
             />
             {errors.email && (
-              <p className="text-xs text-red-600">{errors.email.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.email.message}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password">Kata Sandi</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="password" className="text-xs font-semibold">Kata Sandi</Label>
             <Input
               id="password"
               type="password"
               placeholder="Minimal 8 karakter"
               disabled={isSubmitting}
+              className="rounded-xl border-border/80 h-10 text-sm"
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-xs text-red-600">{errors.password.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.password.message}</p>
             )}
           </div>
 
           <Button
             type="submit"
-            className="w-full gap-2 mt-2"
+            className="w-full gap-2 mt-2 h-11 rounded-xl bg-[#14213D] hover:bg-[#1E2D4A] text-[#FAF7F2] dark:bg-[#FF6B5B] dark:hover:bg-[#FF5542] dark:text-white font-bold shadow-xs transition-all active:scale-98"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin text-[#FF6B5B] dark:text-white" />
                 Mendaftarkan...
               </>
             ) : (
               <>
-                <UserPlus className="h-4 w-4" />
+                <UserPlus className="h-4 w-4 text-[#FF6B5B] dark:text-white" />
                 Buat Akun
               </>
             )}
           </Button>
         </CardContent>
       </form>
-      <CardFooter className="flex flex-col gap-2 text-center text-xs text-muted-foreground border-t border-border pt-4">
+      <CardFooter className="flex flex-col gap-2 text-center text-xs text-muted-foreground border-t border-border/80 pt-4">
         <div>
-          Sudah memiliki akun?{" "}
+          Sudah memiliki akun MoneyTrack?{" "}
           <Link
             href="/login"
-            className="text-primary font-semibold hover:underline"
+            className="text-[#14213D] dark:text-[#FF6B5B] font-bold hover:underline"
           >
-            Masuk di Sini
+            Masuk Sekarang
           </Link>
         </div>
       </CardFooter>

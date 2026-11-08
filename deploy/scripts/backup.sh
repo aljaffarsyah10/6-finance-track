@@ -35,3 +35,4 @@ echo "[$(date -Iseconds)] Cleaning up backups older than 14 days..."
 find "${BACKUP_DIR}" -name "moneytrack_backup_*.sql.gz*" -type f -mtime +14 -delete
 
 echo "[$(date -Iseconds)] Backup rotation completed."
+

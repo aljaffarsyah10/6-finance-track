@@ -90,22 +90,23 @@ export function AccountDialog({
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
           <div className="space-y-1.5">
-            <Label htmlFor="accountName">Nama Akun</Label>
+            <Label htmlFor="accountName" className="text-xs font-semibold">Nama Akun</Label>
             <Input
               id="accountName"
               placeholder="Contoh: Bank BCA, Dompet Kas, GoPay"
+              className="rounded-xl border-border/80 h-10 text-sm"
               {...register("name")}
             />
             {errors.name && (
-              <p className="text-xs text-red-500">{errors.name.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.name.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="accountType">Jenis / Tipe Akun</Label>
+            <Label htmlFor="accountType" className="text-xs font-semibold">Jenis / Tipe Akun</Label>
             <select
               id="accountType"
-              className="w-full h-9 px-3 rounded-md border border-input bg-transparent text-sm shadow-xs focus:outline-none focus:ring-1 focus:ring-ring"
+              className="w-full h-10 px-3 rounded-xl border border-border/80 bg-card text-sm shadow-xs focus:outline-none focus:ring-1 focus:ring-ring"
               {...register("type")}
             >
               <option value="BANK" className="bg-popover text-foreground">
@@ -122,13 +123,13 @@ export function AccountDialog({
               </option>
             </select>
             {errors.type && (
-              <p className="text-xs text-red-500">{errors.type.message}</p>
+              <p className="text-xs text-[#FF6B5B] font-medium">{errors.type.message}</p>
             )}
           </div>
 
           {!isEditing && (
             <div className="space-y-1.5">
-              <Label htmlFor="initialBalance">Saldo Awal (Rupiah)</Label>
+              <Label htmlFor="initialBalance" className="text-xs font-semibold">Saldo Awal (Rupiah)</Label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted-foreground">
                   Rp
@@ -137,12 +138,12 @@ export function AccountDialog({
                   id="initialBalance"
                   type="number"
                   placeholder="0"
-                  className="pl-10 font-mono"
+                  className="pl-10 font-mono rounded-xl border-border/80 h-10 text-sm"
                   {...register("initialBalance", { valueAsNumber: true })}
                 />
               </div>
               {errors.initialBalance && (
-                <p className="text-xs text-red-500">
+                <p className="text-xs text-[#FF6B5B] font-medium">
                   {errors.initialBalance.message}
                 </p>
               )}
@@ -153,11 +154,16 @@ export function AccountDialog({
             <Button
               type="button"
               variant="outline"
+              className="rounded-xl font-medium h-10"
               onClick={() => onOpenChange(false)}
             >
               Batal
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="rounded-xl bg-[#14213D] text-[#FAF7F2] hover:bg-[#1E2D4A] dark:bg-[#FF6B5B] dark:hover:bg-[#FF5542] dark:text-white font-bold h-10 px-5 shadow-xs"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Menyimpan..." : isEditing ? "Simpan Perubahan" : "Simpan Akun"}
             </Button>
           </DialogFooter>
