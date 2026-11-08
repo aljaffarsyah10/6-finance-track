@@ -176,11 +176,16 @@ export default function DashboardPage() {
     );
   }
 
-  const chartData = cashFlowTrend.slice(-6).map((item) => ({
-    month: item.monthName.slice(0, 3),
-    income: item.income,
-    expense: item.expense,
-  }));
+  const chartData = (cashFlowTrend || []).slice(-6).map((item) => {
+    const rawMonth =
+      item.monthName ||
+      (typeof item.month === "string" ? item.month : item.month ? `Bln ${item.month}` : "");
+    return {
+      month: rawMonth ? rawMonth.slice(0, 3) : "-",
+      income: Number(item.income) || 0,
+      expense: Number(item.expense) || 0,
+    };
+  });
 
   const pieColors = [
     "#14213D",

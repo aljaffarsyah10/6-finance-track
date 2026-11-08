@@ -180,10 +180,12 @@ export class DashboardService {
 
       results.push({
         month: monthName,
+        monthName,
         year,
         income,
         expense,
         net: calculateNetCashFlow(income, expense),
+        netCashFlow: calculateNetCashFlow(income, expense),
       });
     }
 

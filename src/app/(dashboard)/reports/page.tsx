@@ -91,12 +91,17 @@ export default function ReportsPage() {
       ? Math.max(0, Math.round((totalAnnualSavings / totalAnnualIncome) * 100))
       : 0;
 
-  const chartCashflow = cashFlowData.map((d) => ({
-    month: d.monthName.slice(0, 3),
-    income: d.income,
-    expense: d.expense,
-    savings: d.netCashFlow,
-  }));
+  const chartCashflow = (cashFlowData || []).map((d) => {
+    const rawMonth =
+      d.monthName ||
+      (typeof d.month === "string" ? d.month : d.month ? `Bln ${d.month}` : "");
+    return {
+      month: rawMonth ? rawMonth.slice(0, 3) : "-",
+      income: Number(d.income) || 0,
+      expense: Number(d.expense) || 0,
+      savings: Number(d.netCashFlow ?? (d as unknown as { savings?: number }).savings) || 0,
+    };
+  });
 
   const pieColors = [
     "#14213D",

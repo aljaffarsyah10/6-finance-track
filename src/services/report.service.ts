@@ -5,6 +5,21 @@ export class ReportService {
   static async getCashFlowReport(userId: string, year: number) {
     const monthlyData = [];
 
+    const monthNames = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
     for (let month = 1; month <= 12; month++) {
       const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
       const endDate = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
@@ -29,14 +44,16 @@ export class ReportService {
         if (agg.type === "EXPENSE") expense = agg._sum.amount || BigInt(0);
       }
 
-      const d = new Date(year, month - 1, 1);
-      const monthLabel = d.toLocaleDateString("id-ID", { month: "short" });
+      const netCashFlow = calculateNetCashFlow(income, expense);
+      const monthName = monthNames[month - 1];
 
       monthlyData.push({
-        month: monthLabel,
+        month,
+        monthName,
         income,
         expense,
-        savings: calculateNetCashFlow(income, expense),
+        netCashFlow,
+        savings: netCashFlow,
       });
     }
 
